@@ -12,7 +12,6 @@ import com.project.bonggong.model.Message
 class MessageAdapter(private val messages: List<Message>) :  RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     // ViewHolder for chatbot messages
-    // ViewHolder for chatbot messages
     class ChatbotMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val profileImageView: ImageView = itemView.findViewById(R.id.profileImageView)
         val messageTextView: TextView = itemView.findViewById(R.id.messageTextView)

@@ -37,11 +37,19 @@ class ChatActivity : AppCompatActivity() {
             val messageText = messageInput.text.toString() // 입력된 메시지 가져오기
             if (messageText.isNotEmpty()) {
                 // 메시지를 Message 객체로 변환하여 리스트에 추가 (로컬 프로필 이미지 사용)
-                val newMessage = Message(messageText, R.drawable.ic_launcher_foreground, isUser = true)
-                messages.add(newMessage) // 메시지를 리스트에 추가
-                adapter.notifyItemInserted(messages.size - 1) // 어댑터에게 데이터가 변경되었음을 알림
-                recyclerView.scrollToPosition(messages.size - 1)  // 가장 마지막 메시지로 스크롤
+
+                // 사용자 메시지
+                val newMessage = Message(messageText, null, isUser = true)
+                messages.add(newMessage)
+                adapter.notifyItemInserted(messages.size - 1)
+                recyclerView.scrollToPosition(messages.size - 1)
                 messageInput.text.clear()
+
+                // 챗봇 메시지 추가
+                val chatbotMessage = Message("챗봇의 응답", R.drawable.ic_launcher_foreground, isUser = false)
+                messages.add(chatbotMessage)
+                adapter.notifyItemInserted(messages.size - 1)
+                recyclerView.scrollToPosition(messages.size - 1)
             }
         }
     }
