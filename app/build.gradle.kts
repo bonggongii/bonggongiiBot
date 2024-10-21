@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
@@ -18,8 +18,22 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
+            // proguard 활성화
             isMinifyEnabled = false
+
+            // 기본 설정
+            proguardFiles (
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+                "proguard-rules-debug.pro"  // debug version에 대한 별도의 룰 적용
+            )
+        }
+        release {
+            // proguard 활성화
+            isMinifyEnabled = false
+
+            // 기본 설정
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -37,17 +51,20 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.8.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation("com.github.bumptech.glide:glide:4.12.0")  // Glide 라이브러리 추가
-    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")  // Glide 컴파일러 추가
+    // Glide 라이브러리 및 컴파일러 추가
+    implementation(libs.glide)
+    annotationProcessor(libs.glide.compiler)
 
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.0") // Navigation 라이브러리 추가
-    implementation ("androidx.navigation:navigation-ui-ktx:2.7.0")
+    // Navigation 라이브러리 추가
+    implementation (libs.navigation.fragment.ktx)
+    implementation (libs.navigation.ui.ktx)
 }
