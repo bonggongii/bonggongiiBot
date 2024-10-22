@@ -52,7 +52,7 @@ class MessageAdapter(private val messages: List<Message>) :  RecyclerView.Adapte
             // Glide로 프로필 이미지 로드
             Glide.with(holder.itemView.context)
                 .load(message.profileImageRes)
-                .placeholder(R.drawable.ic_launcher_foreground)
+                .placeholder(R.drawable.bonggong_profile)
                 .into(holder.profileImageView)
         } else if (holder is UserMessageViewHolder) {
             holder.messageTextView.text = message.text

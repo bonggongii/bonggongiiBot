@@ -39,14 +39,14 @@ class ChatActivity : AppCompatActivity() {
                 // 메시지를 Message 객체로 변환하여 리스트에 추가 (로컬 프로필 이미지 사용)
 
                 // 사용자 메시지
-                val newMessage = Message(messageText, null, isUser = true)
+                val newMessage = Message(messageText, null, true)
                 messages.add(newMessage)
                 adapter.notifyItemInserted(messages.size - 1)
                 recyclerView.scrollToPosition(messages.size - 1)
                 messageInput.text.clear()
 
                 // 챗봇 메시지 추가
-                val chatbotMessage = Message("챗봇의 응답", R.drawable.ic_launcher_foreground, isUser = false)
+                val chatbotMessage = Message("챗봇의 응답", R.drawable.bonggong_profile,  false)
                 messages.add(chatbotMessage)
                 adapter.notifyItemInserted(messages.size - 1)
                 recyclerView.scrollToPosition(messages.size - 1)
