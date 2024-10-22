@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Bonggongii" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:colorPrimary">@color/backgroundColor</item>
+        <item name="android:textColorPrimary">@color/textColor</item>
+        <item name="android:textColorSecondary">@color/textColorHint</item>
     </style>
 </resources>
