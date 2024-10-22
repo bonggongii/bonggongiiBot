@@ -7,24 +7,36 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_height="0dp"
+        android:breakStrategy="simple"
+        android:layout_weight="1"
+        android:background="#111114"/>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#111114">
 
         <EditText
             android:id="@+id/editTextMessage"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_height="wrap_content"/>
+            android:layout_margin="12dp"
+            android:minHeight="48dp"
+            android:hint="질문을 입력하세요"
+            android:textColorHint="#808080"
+            android:textColor="#F5F5F5"
+            />
 
-        <Button
+        <ImageButton
             android:id="@+id/buttonSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send"/>
+            android:layout_margin="12dp"
+            android:src="@drawable/buttonsend_abled"
+            android:background="#111114"
+            />
     </LinearLayout>
 </LinearLayout>
