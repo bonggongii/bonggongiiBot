@@ -57,7 +57,8 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
                 recyclerView.scrollToPosition(messages.size - 1)
                 messageInput.text.clear()
 
-
+                // presenter에 사용자 입력 전달하기
+                presenter.onUserInput(messageText)
             }
         }
     }
@@ -71,7 +72,12 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     }
 
     override fun displayGPTResponse(response: Message) {
-        TODO("Not yet implemented")
+        // GPT 응답 메세지를 리스트에 추가
+        messages.add(response)
+
+        // RecyclerView에 메세지 추가 및 화면 업데이트
+        adapter.notifyItemInserted(messages.size - 1)
+        recyclerView.scrollToPosition(messages.size - 1)
     }
 
     override fun showError(errorMessage: String) {
