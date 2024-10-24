@@ -1,6 +1,9 @@
 package com.project.bonggong.view
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
@@ -41,6 +44,23 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         adapter = MessageAdapter(messages)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+
+        // text-watcher
+        messageInput.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            // 텍스트가 비어있지 않을 때, SendButtion 보입니다
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(s.isNullOrEmpty()){
+                    sendButton.visibility = View.GONE
+                } else {
+                    sendButton.visibility = View.VISIBLE
+                }
+            }
+        })
 
         // 버튼 클릭 리스너
         sendButton.setOnClickListener {
