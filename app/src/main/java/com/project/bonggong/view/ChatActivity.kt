@@ -1,9 +1,12 @@
 package com.project.bonggong.view
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
@@ -45,6 +48,13 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
+        recyclerView.setOnTouchListener { v, event ->
+            if(event.action == MotionEvent.ACTION_DOWN) {
+                hideKeyboard()
+            }
+            false
+        }
+
         // text-watcher
         messageInput.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -77,6 +87,9 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
 
                 // presenter에 사용자 입력 전달하기
                 presenter.onUserInput(messageText)
+
+                // 키보드 내리기
+                hideKeyboard()
             }
         }
     }
@@ -101,5 +114,12 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     override fun showError(errorMessage: String) {
         // todo
         Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+    }
+
+    // 키보드를 숨기는 메서드
+    private fun hideKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(messageInput.windowToken, 0)
+        messageInput.clearFocus()  // 포커스를 제거하여 키보드가 다시 나타나지 않도록 함
     }
 }
