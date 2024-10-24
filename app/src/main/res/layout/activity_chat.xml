@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#111114">
+    android:background="@color/backgroundColor">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -13,34 +13,42 @@
         android:layout_weight="1"
        />
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/exampleQuestionsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:layout_marginBottom="12dp"
+        />
 
-        <EditText
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:id="@+id/editTextMessage"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="12dp"
-            android:minHeight="48dp"
-            android:hint="@string/editTextMessageHint"
-            android:textColorHint="@color/textColorHint"
-            android:textColor="@color/textColor"
-            />
+            >
 
-        <ImageButton
-            android:id="@+id/buttonSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:importantForAccessibility="no"
-            android:src="@drawable/buttonsend_abled"
-            android:background="@color/backgroundColor"
-            />
-    </LinearLayout>
+            <EditText
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:id="@+id/editTextMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="12dp"
+                android:minHeight="48dp"
+                android:hint="@string/editTextMessageHint"
+                android:textColorHint="@color/textColorHint"
+                android:textColor="@color/textColor"
+                />
+
+            <ImageButton
+                android:id="@+id/buttonSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/buttonsend_abled"
+                android:background="@color/backgroundColor"
+                />
+
+        </LinearLayout>
 </LinearLayout>
