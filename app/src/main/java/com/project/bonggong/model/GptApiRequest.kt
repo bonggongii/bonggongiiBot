@@ -1,7 +1,6 @@
 package com.project.bonggong.model
 
 import com.project.bonggong.ChatContract
-import com.project.bonggong.R
 
 class GptApiRequest: ChatContract.Model{
 
