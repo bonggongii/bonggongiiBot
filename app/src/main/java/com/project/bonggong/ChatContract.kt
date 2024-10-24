@@ -1,5 +1,7 @@
 package com.project.bonggong
 
+import com.project.bonggong.model.Message
+
 interface ChatContract {
 
     // UI 관련된 동작 처리
@@ -9,7 +11,7 @@ interface ChatContract {
         fun hideLoading()
 
         // gpt 응답 표시
-        fun displayGPTResponse(response : String)
+        fun displayGPTResponse(response : Message)
 
         // 에러 메세지 표시
         fun showError(errorMessage: String)
@@ -18,12 +20,12 @@ interface ChatContract {
     //
     interface Presenter {
         // 사용자 메세지 처리
-        fun onUserQuestion(input: String)
+        fun onUserInput(input: String)
     }
 
     // ChatGPT api 통신 처리
     interface Model {
         // chat gpt api 호출
-        fun requestGPTResponse(input: String, callback: (String)->Unit, errorCallback: (Throwable) -> Unit)
+        fun sendGptRequest(input: String, callback: (String)->Unit, errorCallback: (Throwable) -> Unit)
     }
 }
