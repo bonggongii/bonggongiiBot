@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.bonggong.model.Message
@@ -44,7 +44,9 @@ class ChatActivity : AppCompatActivity() {
         exampleQuestionsAdapter = ExampleQuestionsAdapter(exampleQuestions) { selectedQuestion ->
             onExampleQuestionSelected(selectedQuestion)
         }
-        exampleQuestionsRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        // 그리드 레이아웃을 적용하여 2열로 설정
+        exampleQuestionsRecyclerView.layoutManager = GridLayoutManager(this, 2)
         exampleQuestionsRecyclerView.adapter = exampleQuestionsAdapter
 
         sendButton.setOnClickListener {
