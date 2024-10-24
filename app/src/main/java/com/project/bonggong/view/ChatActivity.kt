@@ -50,11 +50,21 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
+        // 뷰를 touch 했을 때, 키보드 내리기
         recyclerView.setOnTouchListener { v, event ->
             if(event.action == MotionEvent.ACTION_DOWN) {
                 hideKeyboard()
             }
             false
+        }
+
+        // edittext focus 될 때, 마지막 메세지로 스크롤
+        messageInput.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus){
+                recyclerView.postDelayed({
+                    recyclerView.scrollToPosition(messages.size-1)
+                }, 100)
+            }
         }
 
         // text-watcher
