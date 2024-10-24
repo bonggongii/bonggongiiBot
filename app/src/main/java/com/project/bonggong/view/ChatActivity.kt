@@ -1,5 +1,6 @@
 package com.project.bonggong.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -31,6 +32,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     // 메시지를 저장할 리스트 (Message 객체로)
     private val messages = mutableListOf<Message>()
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
