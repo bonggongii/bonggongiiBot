@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="textColor">#F5F5F5</color>
+    <color name="textColorHint">#808080</color>
+    <color name="backgroundColor">#111114</color>
+    <color name="messageBackgroundColor">#18181B</color>
+    <color name="userMessageStrokeColor">#27272B</color>
+    <color name="chatbotMessageStrokeColor">#36B7C3</color>
 </resources>
