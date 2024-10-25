@@ -76,7 +76,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
 
             // 텍스트가 비어있지 않을 때, SendButtion 보입니다
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(s.isNullOrEmpty()){
+                if(s.isNullOrBlank()){
                     sendButton.visibility = View.GONE
                 } else {
                     sendButton.visibility = View.VISIBLE
