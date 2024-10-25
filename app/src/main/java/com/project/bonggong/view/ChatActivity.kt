@@ -33,7 +33,11 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         "구직자 지원 서비스는 어떤 것이 있나요?",
         "청년 취업 지원 정책이 궁금해요.",
         "경기도 일자리 재단 위치와 운영 시간을 알려주세요.",
-        "진행 중인 채용 공고를 볼 수 있을까요?"
+        "진행 중인 채용 공고를 볼 수 있을까요?",
+        "재직자 교육 프로그램은 어떻게 신청하나요?",
+        "온라인 취업 박람회에 대해 알고 싶어요.",
+        "인턴십 기회는 어디서 찾을 수 있나요?",
+        "자기소개서는 어떻게 작성해야 하나요?"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +52,9 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         exampleQuestionsRecyclerView = findViewById(R.id.exampleQuestionsRecyclerView) // 예시 질문 RecyclerView 초기화
         messageInput = findViewById(R.id.editTextMessage)
         sendButton = findViewById(R.id.buttonSend)
+
+        // 랜덤으로 4개의 질문 선택
+        val exampleQuestions = exampleQuestions.shuffled().take(4)
 
         // RecyclerView에 데이터를 표시할 어댑터 설정
         adapter = MessageAdapter(messages)
