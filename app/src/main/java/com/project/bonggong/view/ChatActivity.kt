@@ -29,7 +29,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
 
     // 메시지를 저장할 리스트 (Message 객체로)
     private val messages = mutableListOf<Message>()
-    private val exampleQuestions = listOf(
+    private val allExampleQuestions = listOf(
         "구직자 지원 서비스는 어떤 것이 있나요?",
         "청년 취업 지원 정책이 궁금해요.",
         "경기도 일자리 재단 위치와 운영 시간을 알려주세요.",
@@ -54,7 +54,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         sendButton = findViewById(R.id.buttonSend)
 
         // 랜덤으로 4개의 질문 선택
-        val exampleQuestions = exampleQuestions.shuffled().take(4)
+        val exampleQuestions = allExampleQuestions.shuffled().take(4)
 
         // RecyclerView에 데이터를 표시할 어댑터 설정
         adapter = MessageAdapter(messages)
