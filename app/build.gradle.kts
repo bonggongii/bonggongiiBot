@@ -80,4 +80,12 @@ dependencies {
     // Navigation 라이브러리 추가
     implementation (libs.navigation.fragment.ktx)
     implementation (libs.navigation.ui.ktx)
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // OkHttp
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 }
