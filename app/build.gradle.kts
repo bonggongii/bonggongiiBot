@@ -18,7 +18,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "OPENAI_API_KEY", getApiKey("OPENAI_API_KEY"))
+        buildConfigField("String", "OPENAI_API_KEY", gradleLocalProperties(rootDir).getProperty("OPENAI_API_KEY"))
     }
 
     buildFeatures {
@@ -55,11 +55,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-}
-
-// local.properties에서 API key 가져오기
-fun getApiKey(propertyKey: String): String {
-    return gradleLocalProperties(rootDir).getProperty(propertyKey)
 }
 
 dependencies {
