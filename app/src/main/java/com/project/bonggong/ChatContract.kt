@@ -1,5 +1,6 @@
 package com.project.bonggong
 
+import com.project.bonggong.api.MessageResponse
 import com.project.bonggong.api.RunResponse
 import com.project.bonggong.model.Message
 
@@ -31,5 +32,13 @@ interface ChatContract {
 
         // run 생성
         fun createRun(input: String, threadId: String, callback: (RunResponse) -> Unit, errorCallback: (Throwable) -> Unit)
+
+        // run 검색 (retrieve)
+        fun retrieveRun(threadId: String, runId: String, output: (List<MessageResponse>) -> Unit, errorCallback: (Throwable) -> Unit)
+        // 일정 시간 대기 후 run 검색 재시도
+        fun delayRetry(threadId: String, runId: String, output: (List<MessageResponse>) -> Unit, errorCallback: (Throwable) -> Unit)
+
+        // 해당 thread의 message list 가져오기
+        fun listMessages(threadId: String, output: (List<MessageResponse>) -> Unit, errorCallback: (Throwable) -> Unit)
     }
 }

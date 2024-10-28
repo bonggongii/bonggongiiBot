@@ -2,5 +2,5 @@ package com.project.bonggong.api
 
 data class CreateRunRequest(
     val assistant_id: String,
-    val additinal_messages: Message_api
+    val additional_messages: List<Message_api>
 )
