@@ -12,9 +12,11 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.bonggong.ChatContract
+import com.project.bonggong.ExampleQuestionsAdapter
 import com.project.bonggong.MessageAdapter
 import com.project.bonggong.R
 import com.project.bonggong.model.GptApiRequest
@@ -24,13 +26,25 @@ import com.project.bonggong.presenter.ChatPresenter
 class ChatActivity : AppCompatActivity(), ChatContract.View {
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var exampleQuestionsRecyclerView: RecyclerView
     private lateinit var messageInput: EditText
     private lateinit var sendButton: ImageButton
     private lateinit var adapter: MessageAdapter
     private lateinit var presenter: ChatContract.Presenter
+    private lateinit var exampleQuestionsAdapter: ExampleQuestionsAdapter
 
     // 메시지를 저장할 리스트 (Message 객체로)
     private val messages = mutableListOf<Message>()
+    private val allExampleQuestions = listOf(
+        "구직자 지원 서비스는 어떤 것이 있나요?",
+        "청년 취업 지원 정책이 궁금해요.",
+        "경기도 일자리 재단 위치와 운영 시간을 알려주세요.",
+        "진행 중인 채용 공고를 볼 수 있을까요?",
+        "재직자 교육 프로그램은 어떻게 신청하나요?",
+        "온라인 취업 박람회에 대해 알고 싶어요.",
+        "인턴십 기회는 어디서 찾을 수 있나요?",
+        "자기소개서는 어떻게 작성해야 하나요?"
+    )
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,8 +56,12 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
 
         // View 초기화, 컴포넌트를 XML에서 가져오기
         recyclerView = findViewById(R.id.recyclerView)
+        exampleQuestionsRecyclerView = findViewById(R.id.exampleQuestionsRecyclerView) // 예시 질문 RecyclerView 초기화
         messageInput = findViewById(R.id.editTextMessage)
         sendButton = findViewById(R.id.buttonSend)
+
+        // 랜덤으로 4개의 질문 선택
+        val exampleQuestions = allExampleQuestions.shuffled().take(4)
 
         // RecyclerView에 데이터를 표시할 어댑터 설정
         adapter = MessageAdapter(messages)
@@ -85,26 +103,45 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         })
 
         // 버튼 클릭 리스너
+        // 예시 질문 어댑터 설정
+        exampleQuestionsAdapter = ExampleQuestionsAdapter(exampleQuestions) { selectedQuestion ->
+            onExampleQuestionSelected(selectedQuestion)
+        }
+
+        // 그리드 레이아웃을 적용하여 2열로 설정
+        exampleQuestionsRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        exampleQuestionsRecyclerView.adapter = exampleQuestionsAdapter
+
         sendButton.setOnClickListener {
-            val messageText = messageInput.text.toString() // 입력된 메시지 가져오기
-            if (messageText.isNotEmpty()) {
-                // 메시지를 Message 객체로 변환하여 리스트에 추가 (로컬 프로필 이미지 사용)
-
-                // 사용자 메시지
-                val newMessage = Message(messageText, null, true)
-                messages.add(newMessage)
-                adapter.notifyItemInserted(messages.size - 1)
-                recyclerView.scrollToPosition(messages.size - 1)
-                messageInput.text.clear()
-
-                // presenter에 사용자 입력 전달하기
-                presenter.onUserInput(messageText)
-
-                // 키보드 내리기
-                hideKeyboard()
-            }
+            sendMessage()
         }
     }
+
+    private fun onExampleQuestionSelected(question: String) {
+        messageInput.setText(question) // 입력창에 질문 추가
+        exampleQuestionsRecyclerView.visibility = View.GONE // 예시 질문 숨김
+        recyclerView.visibility = View.VISIBLE // 채팅 창 표시
+    }
+
+    private fun sendMessage() {
+        val messageText = messageInput.text.toString()
+        exampleQuestionsRecyclerView.visibility = View.GONE // 예시 질문 숨김
+        if (messageText.isNotEmpty()) {
+            val newMessage = Message(messageText, null, true)
+            messages.add(newMessage)
+            adapter.notifyItemInserted(messages.size - 1)
+            recyclerView.scrollToPosition(messages.size - 1)
+            messageInput.text.clear()
+
+            // presenter에 사용자 입력 전달하기
+            presenter.onUserInput(messageText)
+
+            // 키보드 내리기
+            hideKeyboard()
+
+        }
+    }
+
 
     override fun showLoading() {
         TODO("Not yet implemented")
