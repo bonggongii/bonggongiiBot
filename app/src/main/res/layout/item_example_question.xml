@@ -1,5 +1,6 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardView"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,9 +13,13 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+
         android:padding="16dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        tools:ignore="UseCompoundDrawables">
+
+<!--        추후 수정하기(하나의 textView안에 표현하기)-->
 
         <ImageView
             android:id="@+id/imageView"
@@ -28,12 +33,14 @@
         <TextView
             android:id="@+id/textViewQuestion"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginBottom="8dp"
             android:textColor="@color/textColor"
             android:textSize="14sp"
             android:textAlignment="viewStart"
             android:gravity="center_vertical"
+            android:ellipsize="end"
+            android:maxLines="2"
             tools:ignore="RtlCompat" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

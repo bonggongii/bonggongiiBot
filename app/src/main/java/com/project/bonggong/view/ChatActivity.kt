@@ -95,6 +95,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
             adapter.notifyItemInserted(messages.size - 1)
             recyclerView.scrollToPosition(messages.size - 1)
         }
+        //else 전송버튼 비활성화 로직 추가
     }
 
     override fun showLoading() {
