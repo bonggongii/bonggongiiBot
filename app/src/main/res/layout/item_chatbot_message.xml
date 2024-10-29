@@ -3,12 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:layout_marginVertical="8dp"
     >
     <ImageView
         android:id="@+id/profileImageView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginHorizontal="8dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
         android:src="@drawable/bonggong_profile" /> <!-- 기본 프로필 이미지 -->
 
     <TextView
@@ -16,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="100dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginVertical="20dp"
         android:paddingHorizontal="15dp"
         android:paddingVertical="10dp"
         android:background="@drawable/chatbot_message_background"
