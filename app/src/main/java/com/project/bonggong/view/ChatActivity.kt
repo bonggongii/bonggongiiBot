@@ -132,6 +132,13 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
             adapter.notifyItemInserted(messages.size - 1)
             recyclerView.scrollToPosition(messages.size - 1)
             messageInput.text.clear()
+
+            // presenter에 사용자 입력 전달하기
+            presenter.onUserInput(messageText)
+
+            // 키보드 내리기
+            hideKeyboard()
+
         }
     }
 
