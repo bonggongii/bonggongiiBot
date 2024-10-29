@@ -1,7 +1,13 @@
 package com.project.bonggong.view
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
@@ -40,6 +46,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         "자기소개서는 어떻게 작성해야 하나요?"
     )
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
@@ -61,6 +68,41 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
+        // 뷰를 touch 했을 때, 키보드 내리기
+        recyclerView.setOnTouchListener { v, event ->
+            if(event.action == MotionEvent.ACTION_DOWN) {
+                hideKeyboard()
+            }
+            false
+        }
+
+        // edittext focus 될 때, 마지막 메세지로 스크롤
+        messageInput.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus){
+                recyclerView.postDelayed({
+                    recyclerView.scrollToPosition(messages.size-1)
+                }, 100)
+            }
+        }
+
+        // text-watcher
+        messageInput.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            // 텍스트가 비어있지 않을 때, SendButtion 보입니다
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(s.isNullOrBlank()){
+                    sendButton.visibility = View.GONE
+                } else {
+                    sendButton.visibility = View.VISIBLE
+                }
+            }
+        })
+
+        // 버튼 클릭 리스너
         // 예시 질문 어댑터 설정
         exampleQuestionsAdapter = ExampleQuestionsAdapter(exampleQuestions) { selectedQuestion ->
             onExampleQuestionSelected(selectedQuestion)
@@ -83,20 +125,16 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
 
     private fun sendMessage() {
         val messageText = messageInput.text.toString()
+        exampleQuestionsRecyclerView.visibility = View.GONE // 예시 질문 숨김
         if (messageText.isNotEmpty()) {
             val newMessage = Message(messageText, null, true)
             messages.add(newMessage)
             adapter.notifyItemInserted(messages.size - 1)
             recyclerView.scrollToPosition(messages.size - 1)
             messageInput.text.clear()
-
-            val chatbotMessage = Message("챗봇의 응답", R.drawable.bonggong_profile, false)
-            messages.add(chatbotMessage)
-            adapter.notifyItemInserted(messages.size - 1)
-            recyclerView.scrollToPosition(messages.size - 1)
         }
-        //else 전송버튼 비활성화 로직 추가
     }
+
 
     override fun showLoading() {
         TODO("Not yet implemented")
@@ -118,5 +156,12 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     override fun showError(errorMessage: String) {
         // todo
         Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+    }
+
+    // 키보드를 숨기는 메서드
+    private fun hideKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(messageInput.windowToken, 0)
+        messageInput.clearFocus()  // 포커스를 제거하여 키보드가 다시 나타나지 않도록 함
     }
 }

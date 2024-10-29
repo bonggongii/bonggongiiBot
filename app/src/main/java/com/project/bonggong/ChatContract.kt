@@ -1,5 +1,7 @@
 package com.project.bonggong
 
+import com.project.bonggong.api.MessageResponse
+import com.project.bonggong.api.RunResponse
 import com.project.bonggong.model.Message
 
 interface ChatContract {
@@ -25,7 +27,18 @@ interface ChatContract {
 
     // ChatGPT api 통신 처리
     interface Model {
-        // chat gpt api 호출
-        fun sendGptRequest(input: String, callback: (String)->Unit, errorCallback: (Throwable) -> Unit)
+        // thread 생성 및 message 추가, run 생성
+        fun createThreadAndRun(input: String, callback: (RunResponse) -> Unit, errorCallback: (Throwable) -> Unit)
+
+        // run 생성
+        fun createRun(input: String, threadId: String, callback: (RunResponse) -> Unit, errorCallback: (Throwable) -> Unit)
+
+        // run 검색 (retrieve)
+        fun retrieveRun(threadId: String, runId: String, output: (List<MessageResponse>) -> Unit, errorCallback: (Throwable) -> Unit)
+        // 일정 시간 대기 후 run 검색 재시도
+        fun delayRetry(threadId: String, runId: String, output: (List<MessageResponse>) -> Unit, errorCallback: (Throwable) -> Unit)
+
+        // 해당 thread의 message list 가져오기
+        fun listMessages(threadId: String, output: (List<MessageResponse>) -> Unit, errorCallback: (Throwable) -> Unit)
     }
 }
