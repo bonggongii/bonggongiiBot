@@ -1,5 +1,6 @@
 package com.project.bonggong
 
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.project.bonggong.model.Message
+import com.project.bonggong.util.MarkdownProcessor
 
-class MessageAdapter(private val messages: List<Message>) :  RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MessageAdapter(
+    private val messages: List<Message>,
+    private val markdownProcessor: MarkdownProcessor
+    ) :  RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     // ViewHolder for chatbot messages
     class ChatbotMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -48,7 +53,11 @@ class MessageAdapter(private val messages: List<Message>) :  RecyclerView.Adapte
         val message = messages[position]
 
         if (holder is ChatbotMessageViewHolder) {
-            holder.messageTextView.text = message.text
+            // 마크다운 텍스트 설정
+            holder.messageTextView.text = markdownProcessor.formatToMarkdown(message.text)
+            // 하이퍼링크 활성화
+            holder.messageTextView.movementMethod = LinkMovementMethod.getInstance()
+
             // Glide로 프로필 이미지 로드
             Glide.with(holder.itemView.context)
                 .load(message.profileImageRes)
