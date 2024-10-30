@@ -1,5 +1,6 @@
 package com.project.bonggong
 
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,6 +55,8 @@ class MessageAdapter(
         if (holder is ChatbotMessageViewHolder) {
             // 마크다운 텍스트 설정
             holder.messageTextView.text = markdownProcessor.formatToMarkdown(message.text)
+            // 하이퍼링크 활성화
+            holder.messageTextView.movementMethod = LinkMovementMethod.getInstance()
 
             // Glide로 프로필 이미지 로드
             Glide.with(holder.itemView.context)
