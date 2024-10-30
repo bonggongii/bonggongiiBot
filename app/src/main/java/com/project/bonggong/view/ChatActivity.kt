@@ -153,7 +153,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
 
     override fun displayGPTResponse(response: Message) {
         // GPT 응답 메세지를 리스트에 추가
-        messages.add(response)
+        messages.add(response.copy(isExpanded = false)) //isExpanded 기본값 설정
 
         // RecyclerView에 메세지 추가 및 화면 업데이트
         adapter.notifyItemInserted(messages.size - 1)
