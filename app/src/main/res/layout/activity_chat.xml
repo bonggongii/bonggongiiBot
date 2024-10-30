@@ -37,6 +37,7 @@
                 android:layout_weight="1"
                 android:layout_margin="12dp"
                 android:minHeight="48dp"
+                android:maxLines="5"
                 android:hint="@string/editTextMessageHint"
                 android:textColorHint="@color/textColorHint"
                 android:textColor="@color/textColor"
