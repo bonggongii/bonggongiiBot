@@ -83,4 +83,7 @@ dependencies {
     // OkHttp
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+
+    // markdown 라이브러리 추가
+    implementation ("io.noties.markwon:core:4.6.2")
 }
