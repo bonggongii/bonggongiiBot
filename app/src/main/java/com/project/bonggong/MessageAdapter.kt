@@ -64,8 +64,7 @@ class MessageAdapter(
                 .placeholder(R.drawable.bonggong_profile)
                 .into(holder.profileImageView)
         } else if (holder is UserMessageViewHolder) {
-            // 마크다운 텍스트 설정
-            holder.messageTextView.text = markdownProcessor.formatToMarkdown(message.text)
+            holder.messageTextView.text = message.text
         }
     }
 
