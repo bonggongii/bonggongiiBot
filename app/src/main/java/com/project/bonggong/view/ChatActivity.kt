@@ -22,6 +22,7 @@ import com.project.bonggong.R
 import com.project.bonggong.model.GptApiRequest
 import com.project.bonggong.model.Message
 import com.project.bonggong.presenter.ChatPresenter
+import com.project.bonggong.util.MarkdownProcessor
 
 class ChatActivity : AppCompatActivity(), ChatContract.View {
 
@@ -64,12 +65,12 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         val exampleQuestions = allExampleQuestions.shuffled().take(4)
 
         // RecyclerView에 데이터를 표시할 어댑터 설정
-        adapter = MessageAdapter(messages)
+        adapter = MessageAdapter(messages, MarkdownProcessor(this))
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         // 뷰를 touch 했을 때, 키보드 내리기
-        recyclerView.setOnTouchListener { v, event ->
+        recyclerView.setOnTouchListener { _, event ->
             if(event.action == MotionEvent.ACTION_DOWN) {
                 hideKeyboard()
             }
@@ -77,7 +78,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         }
 
         // edittext focus 될 때, 마지막 메세지로 스크롤
-        messageInput.setOnFocusChangeListener { v, hasFocus ->
+        messageInput.setOnFocusChangeListener { _, hasFocus ->
             if(hasFocus){
                 recyclerView.postDelayed({
                     recyclerView.scrollToPosition(messages.size-1)
@@ -123,6 +124,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     private fun sendMessage() {
         val messageText = messageInput.text.toString()
         exampleQuestionsRecyclerView.visibility = View.GONE // 예시 질문 숨김
+
         if (messageText.isNotEmpty()) {
             val newMessage = Message(messageText, null, true)
             messages.add(newMessage)
