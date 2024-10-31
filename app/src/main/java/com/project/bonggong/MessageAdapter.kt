@@ -1,5 +1,6 @@
 package com.project.bonggong
 
+import android.annotation.SuppressLint
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ class MessageAdapter(
     class ChatbotMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val profileImageView: ImageView = itemView.findViewById(R.id.profileImageView)
         val messageTextView: TextView = itemView.findViewById(R.id.messageTextView)
+        val moreButton: TextView = itemView.findViewById(R.id.moreButton)
     }
 
     // ViewHolder for user messages
@@ -49,14 +51,41 @@ class MessageAdapter(
     }
 
     // 데이터 바인딩
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val message = messages[position]
 
         if (holder is ChatbotMessageViewHolder) {
-            // 마크다운 텍스트 설정
-            holder.messageTextView.text = markdownProcessor.formatToMarkdown(message.text)
+            holder.itemView.tag = message
+
+            // 메시지 확장 여부에 따라 텍스트 설정
+            if (message.isExpanded) {
+                // 마크다운 텍스트 설정
+                holder.messageTextView.text = markdownProcessor.formatToMarkdown(message.text)
+
+                holder.moreButton.text = "접기"
+                holder.moreButton.visibility = View.VISIBLE
+            } else {
+                val maxPreviewLength = 400
+                if (message.text.length > maxPreviewLength) {
+                    holder.messageTextView.text = markdownProcessor.formatToMarkdown(
+                        message.text.substring(0, maxPreviewLength) + "..."
+                    )
+                    holder.moreButton.visibility = View.VISIBLE
+                    holder.moreButton.text = "더보기"
+                } else {
+                    holder.messageTextView.text = markdownProcessor.formatToMarkdown(message.text)
+                    holder.moreButton.visibility = View.GONE
+                }
+            }
             // 하이퍼링크 활성화
             holder.messageTextView.movementMethod = LinkMovementMethod.getInstance()
+
+            // 더보기 버튼 클릭 리스너 설정
+            holder.moreButton.setOnClickListener {
+                message.isExpanded = !message.isExpanded
+                notifyItemChanged(position)
+            }
 
             // Glide로 프로필 이미지 로드
             Glide.with(holder.itemView.context)

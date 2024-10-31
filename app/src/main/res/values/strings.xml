@@ -4,4 +4,5 @@
     <string name="chatbot_sample_message">chatbot Sample Message</string>
     <string name="user_sample_message">User Sample Message</string>
     <string name="button_start_chat">Start Chat</string>
+    <string name="moreText">더보기</string>
 </resources>

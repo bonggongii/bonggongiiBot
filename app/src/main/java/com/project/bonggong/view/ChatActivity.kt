@@ -86,6 +86,9 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
             }
         }
 
+        // 초기 전송 버튼 상태 설정
+        updateSendButtonState()
+
         // text-watcher
         messageInput.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -93,26 +96,20 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
             override fun afterTextChanged(s: Editable?) {
             }
 
-            // 텍스트가 비어있지 않을 때, SendButtion 보입니다
+            // 텍스트가 비어있을 때 -> 비활성화ver 아이콘으로 변경
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(s.isNullOrBlank()){
-                    sendButton.visibility = View.GONE
-                } else {
-                    sendButton.visibility = View.VISIBLE
-                }
+                updateSendButtonState()
             }
         })
-
-        // 버튼 클릭 리스너
         // 예시 질문 어댑터 설정
         exampleQuestionsAdapter = ExampleQuestionsAdapter(exampleQuestions) { selectedQuestion ->
             onExampleQuestionSelected(selectedQuestion)
         }
-
         // 그리드 레이아웃을 적용하여 2열로 설정
         exampleQuestionsRecyclerView.layoutManager = GridLayoutManager(this, 2)
         exampleQuestionsRecyclerView.adapter = exampleQuestionsAdapter
 
+        //버튼 클릭 리스너
         sendButton.setOnClickListener {
             sendMessage()
         }
@@ -155,7 +152,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
 
     override fun displayGPTResponse(response: Message) {
         // GPT 응답 메세지를 리스트에 추가
-        messages.add(response)
+        messages.add(response.copy(isExpanded = false)) //isExpanded 기본값 설정
 
         // RecyclerView에 메세지 추가 및 화면 업데이트
         adapter.notifyItemInserted(messages.size - 1)
@@ -173,4 +170,15 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         imm.hideSoftInputFromWindow(messageInput.windowToken, 0)
         messageInput.clearFocus()  // 포커스를 제거하여 키보드가 다시 나타나지 않도록 함
     }
+
+    private fun updateSendButtonState() {
+        if (messageInput.text.isNullOrBlank()) {
+            sendButton.setImageResource(R.drawable.buttonsend_disabled) // 비활성화 이미지로 변경
+            sendButton.visibility = View.VISIBLE // 버튼을 보이도록 설정
+        } else {
+            sendButton.setImageResource(R.drawable.buttonsend_abled) // 활성화 이미지로 변경
+            sendButton.visibility = View.VISIBLE // 버튼을 보이도록 설정
+        }
+    }
 }
+
