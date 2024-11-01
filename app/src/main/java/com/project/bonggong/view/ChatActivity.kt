@@ -22,6 +22,7 @@ import com.project.bonggong.R
 import com.project.bonggong.model.GptApiRequest
 import com.project.bonggong.model.Message
 import com.project.bonggong.presenter.ChatPresenter
+import com.project.bonggong.util.MarkdownProcessor
 
 class ChatActivity : AppCompatActivity(), ChatContract.View {
 
@@ -64,12 +65,12 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         val exampleQuestions = allExampleQuestions.shuffled().take(4)
 
         // RecyclerView에 데이터를 표시할 어댑터 설정
-        adapter = MessageAdapter(messages)
+        adapter = MessageAdapter(messages, MarkdownProcessor(this))
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         // 뷰를 touch 했을 때, 키보드 내리기
-        recyclerView.setOnTouchListener { v, event ->
+        recyclerView.setOnTouchListener { _, event ->
             if(event.action == MotionEvent.ACTION_DOWN) {
                 hideKeyboard()
             }
@@ -77,13 +78,16 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         }
 
         // edittext focus 될 때, 마지막 메세지로 스크롤
-        messageInput.setOnFocusChangeListener { v, hasFocus ->
+        messageInput.setOnFocusChangeListener { _, hasFocus ->
             if(hasFocus){
                 recyclerView.postDelayed({
                     recyclerView.scrollToPosition(messages.size-1)
                 }, 100)
             }
         }
+
+        // 초기 전송 버튼 상태 설정
+        updateSendButtonState()
 
         // text-watcher
         messageInput.addTextChangedListener(object: TextWatcher {
@@ -92,26 +96,20 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
             override fun afterTextChanged(s: Editable?) {
             }
 
-            // 텍스트가 비어있지 않을 때, SendButtion 보입니다
+            // 텍스트가 비어있을 때 -> 비활성화ver 아이콘으로 변경
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(s.isNullOrBlank()){
-                    sendButton.visibility = View.GONE
-                } else {
-                    sendButton.visibility = View.VISIBLE
-                }
+                updateSendButtonState()
             }
         })
-
-        // 버튼 클릭 리스너
         // 예시 질문 어댑터 설정
         exampleQuestionsAdapter = ExampleQuestionsAdapter(exampleQuestions) { selectedQuestion ->
             onExampleQuestionSelected(selectedQuestion)
         }
-
         // 그리드 레이아웃을 적용하여 2열로 설정
         exampleQuestionsRecyclerView.layoutManager = GridLayoutManager(this, 2)
         exampleQuestionsRecyclerView.adapter = exampleQuestionsAdapter
 
+        //버튼 클릭 리스너
         sendButton.setOnClickListener {
             sendMessage()
         }
@@ -126,6 +124,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     private fun sendMessage() {
         val messageText = messageInput.text.toString()
         exampleQuestionsRecyclerView.visibility = View.GONE // 예시 질문 숨김
+
         if (messageText.isNotEmpty()) {
             val newMessage = Message(messageText, null, true)
             messages.add(newMessage)
@@ -153,7 +152,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
 
     override fun displayGPTResponse(response: Message) {
         // GPT 응답 메세지를 리스트에 추가
-        messages.add(response)
+        messages.add(response.copy(isExpanded = false)) //isExpanded 기본값 설정
 
         // RecyclerView에 메세지 추가 및 화면 업데이트
         adapter.notifyItemInserted(messages.size - 1)
@@ -171,4 +170,15 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         imm.hideSoftInputFromWindow(messageInput.windowToken, 0)
         messageInput.clearFocus()  // 포커스를 제거하여 키보드가 다시 나타나지 않도록 함
     }
+
+    private fun updateSendButtonState() {
+        if (messageInput.text.isNullOrBlank()) {
+            sendButton.setImageResource(R.drawable.buttonsend_disabled) // 비활성화 이미지로 변경
+            sendButton.visibility = View.VISIBLE // 버튼을 보이도록 설정
+        } else {
+            sendButton.setImageResource(R.drawable.buttonsend_abled) // 활성화 이미지로 변경
+            sendButton.visibility = View.VISIBLE // 버튼을 보이도록 설정
+        }
+    }
 }
+

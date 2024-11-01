@@ -8,4 +8,5 @@
     <color name="messageBackgroundColor">#18181B</color>
     <color name="userMessageStrokeColor">#27272B</color>
     <color name="chatbotMessageStrokeColor">#36B7C3</color>
+    <color name="textColorLink">#8888CC</color>
 </resources>
