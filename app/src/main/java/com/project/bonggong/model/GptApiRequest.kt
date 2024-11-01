@@ -1,18 +1,19 @@
 package com.project.bonggong.model
 
-import android.util.Log
 import com.project.bonggong.ChatContract
-import com.project.bonggong.api.CreateRunRequest
-import com.project.bonggong.api.CreateThreadAndRunRequest
-import com.project.bonggong.api.MessageListResponse
-import com.project.bonggong.api.MessageResponse
-import com.project.bonggong.api.Message_api
+import com.project.bonggong.api.data.CreateRunRequest
+import com.project.bonggong.api.data.CreateThreadAndRunRequest
+import com.project.bonggong.api.data.MessageListResponse
+import com.project.bonggong.api.data.MessageResponse
+import com.project.bonggong.api.data.Message_api
 import com.project.bonggong.api.RetrofitInstance
-import com.project.bonggong.api.RunResponse
+import com.project.bonggong.api.data.RunResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,6 +22,7 @@ class GptApiRequest: ChatContract.Model{
 
     // 1. 첫 번째 사용자 입력이 들어 왔을 때
     // thread 생성 및 message 추가, run 생성
+    // 1-1. non stream 방식
     override fun createThreadAndRun(
         input: String, // 사용자 입력 데이터
         callback: (RunResponse) -> Unit, // 성공 응답 콜백 함수 추가
@@ -29,7 +31,8 @@ class GptApiRequest: ChatContract.Model{
         val requestBody = CreateThreadAndRunRequest(
             assistant_id = "asst_pgey4f6HMF8y1xvhti6dldNp",
             thread = CreateThreadAndRunRequest.Thread(
-                messages = listOf(Message_api("user", input)))
+                messages = listOf(Message_api("user", input))),
+            stream = true
         )
 
         RetrofitInstance.api.createThreadAndRun(requestBody).enqueue(object : Callback<RunResponse> {
@@ -58,8 +61,72 @@ class GptApiRequest: ChatContract.Model{
         })
     }
 
+    // 1-2. stream 방식
+    override fun createThreadAndRunStream(
+        input: String, // 사용자 입력 데이터
+        threadCallback: (String) -> Unit,
+        errorCallback: (Throwable) -> Unit
+    ) {
+        val requestBody = CreateThreadAndRunRequest(
+            assistant_id = "asst_pgey4f6HMF8y1xvhti6dldNp",
+            thread = CreateThreadAndRunRequest.Thread(
+                messages = listOf(Message_api("user", input))
+            ),
+            stream = true
+        )
+
+        RetrofitInstance.api.createThreadAndRunStream(requestBody).enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    if (response.isSuccessful) {
+                        // 서버에서 전달받는 데이터를 스트림으로 읽어오기
+                        val source = response.body()?.source() ?: return
+                        try {
+                            while (!source.exhausted()) {
+                                // 한 줄씩 읽기
+                                val line = source.readUtf8Line() ?: continue
+                                if (line.startsWith("data: ")) {
+                                    val jsonString = line.removePrefix("data: ").trim()
+                                    // 스트림 데이터 처리
+                                    handleStreamEvent(jsonString, threadCallback)
+                                }
+                            }
+                        } catch (e: Exception) {
+                            errorCallback(e)
+                        } finally {
+                            source.close()
+                        }
+                    } else {
+                        errorCallback(Throwable("Failed with code ${response.code()}"))
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    errorCallback(t)
+                }
+            })
+    }
+
+    // JSON 문자열에서 각 스트림 이벤트 추출
+    private fun handleStreamEvent(jsonString: String, threadCallback: (String) -> Unit) {
+        val jsonObject = JSONObject(jsonString)
+        val event = jsonObject.optString("object")
+
+        // thread.message.delta 이벤트 유형 처리
+        if (event == "thread.message.delta") {
+            val contentArray = jsonObject.getJSONObject("delta").getJSONArray("content")
+            if (contentArray.length() > 0) {
+                val text = contentArray.getJSONObject(0).getJSONObject("text").getString("value")
+                threadCallback(text)  // text 반환 (한 글자)
+            }
+        }
+    }
+
     // 2. 첫 번째가 아닌 사용자 입력이 들어 왔을 때
     // run 생성 (message 추가)
+    // 2-1. non stream 방식
     override fun createRun(
         input: String,  // 사용자 입력 데이터
         threadId: String,  // 기존 thread ID
@@ -68,7 +135,8 @@ class GptApiRequest: ChatContract.Model{
     ) {
         val requestBody = CreateRunRequest(
             assistant_id = "asst_pgey4f6HMF8y1xvhti6dldNp",
-            additional_messages = listOf(Message_api("user", input))
+            additional_messages = listOf(Message_api("user", input)),
+            stream = true
         )
 
         RetrofitInstance.api.createRun(threadId, requestBody).enqueue(object : Callback<RunResponse> {
@@ -94,6 +162,54 @@ class GptApiRequest: ChatContract.Model{
         })
     }
 
+    // 2-2. stream 방식
+    override fun createRunStream(
+        input: String, // 사용자 입력 데이터
+        threadId: String,  // 기존 thread ID
+        threadCallback: (String) -> Unit,
+        errorCallback: (Throwable) -> Unit
+    ) {
+        val requestBody = CreateRunRequest(
+            assistant_id = "asst_pgey4f6HMF8y1xvhti6dldNp",
+            additional_messages = listOf(Message_api("user", input)),
+            stream = true
+        )
+
+        RetrofitInstance.api.createRunStream(threadId, requestBody).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                if (response.isSuccessful) {
+                    // 서버에서 전달받는 데이터를 스트림으로 읽어오기
+                    val source = response.body()?.source() ?: return
+                    try {
+                        while (!source.exhausted()) {
+                            // 한 줄씩 읽기
+                            val line = source.readUtf8Line() ?: continue
+                            if (line.startsWith("data: ")) {
+                                val jsonString = line.removePrefix("data: ").trim()
+                                // 스트림 데이터 처리
+                                handleStreamEvent(jsonString, threadCallback)
+                            }
+                        }
+                    } catch (e: Exception) {
+                        errorCallback(e)
+                    } finally {
+                        source.close()
+                    }
+                } else {
+                    errorCallback(Throwable("Failed with code ${response.code()}"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                errorCallback(t)
+            }
+        })
+    }
+
+    // 과정 3, 4는 non stream 방식에서 필요한 부분 (현재 동작 X)
     // 3. run 검색 (retrieve)
     override fun retrieveRun(
         threadId: String, // 해당되는 thread ID

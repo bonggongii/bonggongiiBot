@@ -3,9 +3,6 @@ package com.project.bonggong.presenter
 import android.util.Log
 import com.project.bonggong.ChatContract
 import com.project.bonggong.R
-import com.project.bonggong.api.MessageResponse
-import com.project.bonggong.api.RetrofitInstance
-import com.project.bonggong.api.RunResponse
 import com.project.bonggong.model.Message
 
 class ChatPresenter(
@@ -29,23 +26,43 @@ class ChatPresenter(
         if (threadId == null) {
             // 1. 첫 번째 사용자 입력이 들어 왔을 때
             // thread 생성 및 message 추가, run 생성
-            model.createThreadAndRun(input, { response ->
-                threadId = response.thread_id // 첫 메시지의 thread ID 저장
-                processMessages(threadId!!)
+
+            // 1-1. non stream 방식
+//            model.createThreadAndRun(input, { response ->
+//                threadId = response.thread_id // 첫 메시지의 thread ID 저장
+//                processMessages(threadId!!)
+//            }, { error ->
+//                view.showError(error.message ?: "알 수 없는 에러가 발생했습니다. 다시 시도해 주세요")
+//            })
+
+            // 1-2. stream 방식
+            model.createThreadAndRunStream(input, { deltaText ->
+                // 여기서 받아온 text(한 글자)를 화면에 뿌리는데, 별도의 처리 로직 필요
+                view.displayGPTResponse(Message(deltaText, R.drawable.bonggong_profile, false))
             }, { error ->
-                view.showError(error.message ?: "알 수 없는 에러가 발생했습니다. 다시 시도해 주세요")
+                view.showError(error.message ?: "알 수 없는 에러가 발생했습니다.")
             })
         } else {
             // 2. 첫 번째가 아닌 사용자 입력이 들어 왔을 때
             // run 생성 (message 추가)
-                model.createRun(input, threadId!!, { response ->
-                    processMessages(threadId!!)
+            // 2-1. non stream 방식
+//                model.createRun(input, threadId!!, { response ->
+//                    processMessages(threadId!!)
+//            }, { error ->
+//                view.showError(error.message ?: "알 수 없는 에러가 발생했습니다. 다시 시도해 주세요")
+//            })
+
+            // 2-2. stream 방식
+            model.createRunStream(input, threadId!!, { deltaText ->
+                // 여기서 받아온 text(한 글자)를 화면에 뿌리는데, 별도의 처리 로직 필요
+                view.displayGPTResponse(Message(deltaText, R.drawable.bonggong_profile, false))
             }, { error ->
-                view.showError(error.message ?: "알 수 없는 에러가 발생했습니다. 다시 시도해 주세요")
+                view.showError(error.message ?: "알 수 없는 에러가 발생했습니다.")
             })
         }
     }
 
+    // non stream 방식에서 필요한 부분 (현재 동작 X)
     private fun processMessages(threadId: String) {
         // 비동기 방식으로 listMessages 호출
         model.listMessages(threadId, { messages ->
