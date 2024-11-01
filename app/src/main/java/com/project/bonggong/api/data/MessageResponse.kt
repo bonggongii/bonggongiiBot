@@ -1,4 +1,4 @@
-package com.project.bonggong.api
+package com.project.bonggong.api.data
 
 data class MessageListResponse(
     val `object`: String,
