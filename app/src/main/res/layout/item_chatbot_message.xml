@@ -30,7 +30,8 @@
             android:text="@string/chatbot_sample_message"
             android:layout_marginEnd="70dp"
             android:layout_marginVertical="20dp"
-            android:textColor="@color/textColor"/>
+            android:textColor="@color/textColor"
+            android:textColorLink="@color/textColorLink"/>
 
         <TextView
             android:id="@+id/moreButton"

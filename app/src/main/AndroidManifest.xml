@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/bonggong_profile"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Bonggongii"
+        android:theme="@style/Theme.Bonggongii.NoSplash"
         tools:targetApi="31">
         <activity
             android:name=".SplashActivity"
