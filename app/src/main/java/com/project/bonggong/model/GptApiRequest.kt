@@ -1,5 +1,6 @@
 package com.project.bonggong.model
 
+import android.util.Log
 import com.project.bonggong.ChatContract
 import com.project.bonggong.api.data.CreateRunRequest
 import com.project.bonggong.api.data.CreateThreadAndRunRequest
@@ -111,6 +112,12 @@ class GptApiRequest: ChatContract.Model{
 
     // JSON 문자열에서 각 스트림 이벤트 추출
     private fun handleStreamEvent(jsonString: String, threadCallback: (String) -> Unit) {
+
+        // jsonString이 "[DONE]인 경우 즉시 종료 처리
+        if(jsonString == "[DONE]") {
+            Log.d(this.javaClass.simpleName, "Stream이 종료되었습니다.")
+            return
+        }
         val jsonObject = JSONObject(jsonString)
         val event = jsonObject.optString("object")
 
