@@ -2,8 +2,6 @@ package com.project.bonggong.presenter
 
 import android.util.Log
 import com.project.bonggong.ChatContract
-import com.project.bonggong.R
-import com.project.bonggong.model.Message
 
 class ChatPresenter(
     private var view: ChatContract.View,
@@ -37,8 +35,7 @@ class ChatPresenter(
 
             // 1-2. stream 방식
             model.createThreadAndRunStream(input, { deltaText ->
-                // 여기서 받아온 text(한 글자)를 화면에 뿌리는데, 별도의 처리 로직 필요
-                view.displayGPTResponse(Message(deltaText, R.drawable.bonggong_profile, false))
+                view.enqueueTypingText(deltaText)
             }, { error ->
                 view.showError(error.message ?: "알 수 없는 에러가 발생했습니다.")
             })
@@ -54,8 +51,7 @@ class ChatPresenter(
 
             // 2-2. stream 방식
             model.createRunStream(input, threadId!!, { deltaText ->
-                // 여기서 받아온 text(한 글자)를 화면에 뿌리는데, 별도의 처리 로직 필요
-                view.displayGPTResponse(Message(deltaText, R.drawable.bonggong_profile, false))
+                view.enqueueTypingText(deltaText)
             }, { error ->
                 view.showError(error.message ?: "알 수 없는 에러가 발생했습니다.")
             })
@@ -76,9 +72,7 @@ class ChatPresenter(
             Log.d("ChatPresenter.onUserInput", "봉공이봇 답변 : ${assistantMessage.toString()}")
 
             if (assistantMessage != null) {
-                view.displayGPTResponse(
-                    Message(assistantMessage, R.drawable.bonggong_profile, false)
-                )
+                view.displayGPTResponse(assistantMessage)
             } else {
                 view.showError("No assistant response found.")
             }

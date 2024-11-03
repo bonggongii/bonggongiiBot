@@ -13,14 +13,17 @@ interface ChatContract {
         fun showLoading()
         fun hideLoading()
 
-        // gpt 응답 표시
-        fun displayGPTResponse(response : Message)
+        // gpt 응답 표시 : non-streaming
+        fun displayGPTResponse(response: String)
+
+        // gpt 응답 조립 : streaming
+        fun enqueueTypingText(text: String)
 
         // 에러 메세지 표시
         fun showError(errorMessage: String)
     }
 
-    //
+    // 중간과정 -> 요청 전달, 반환, error 관리 등
     interface Presenter {
         // 사용자 메세지 처리
         fun onUserInput(input: String)
