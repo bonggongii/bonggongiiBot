@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -25,6 +26,8 @@ import com.project.bonggong.presenter.ChatPresenter
 import com.project.bonggong.util.MarkdownProcessor
 
 class ChatActivity : AppCompatActivity(), ChatContract.View {
+
+    private val className = this.javaClass.simpleName
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var exampleQuestionsRecyclerView: RecyclerView
@@ -170,6 +173,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     override fun showError(errorMessage: String) {
         // todo
         Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+        Log.e(className, errorMessage)
     }
 
     // 키보드를 숨기는 메서드
