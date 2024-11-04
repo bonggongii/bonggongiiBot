@@ -1,4 +1,4 @@
-package com.project.bonggong.api
+package com.project.bonggong.api.data
 
 data class Message_api(
     val role: String,
