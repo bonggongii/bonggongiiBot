@@ -11,6 +11,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -44,15 +45,25 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     private lateinit var presenter: ChatContract.Presenter
     private lateinit var exampleQuestionsAdapter: ExampleQuestionsAdapter
     private lateinit var clearButton: ImageButton
+    private lateinit var mainBonggong: ImageView
+    private lateinit var mainText: ImageView
+    private lateinit var mainDescription: ImageView
+
 
     // 메시지를 저장할 리스트 (Message 객체로)
     private val messages = mutableListOf<Message>()
     private val allExampleQuestions = listOf(
+        "경기도 일자리 재단의 주요 사업과 기능은 무엇인가요?",
         "구직자 지원 서비스는 어떤 것이 있나요?",
+        "경기도 일자리 재단에서 제공하는 구직자 교육 프로그램은 무엇이 있나요?",
         "청년 취업 지원 정책이 궁금해요.",
+        "경기도 청년을 대상으로 하는 일자리 지원 프로그램에는 어떤 것들이 있나요?",
+        "경기도에서 여성을 위한 일자리 지원 프로그램은 어떤 것들이 있나요?",
+        "경기도에서 중장년층을 위해 제공하는 재취업 프로그램은 무엇인가요?",
         "경기도 일자리 재단 위치와 운영 시간을 알려주세요.",
         "진행 중인 채용 공고를 볼 수 있을까요?",
         "재직자 교육 프로그램은 어떻게 신청하나요?",
+        "직업 상담을 받으려면 어떻게 해야 하나요?",
         "온라인 취업 박람회에 대해 알고 싶어요.",
         "인턴십 기회는 어디서 찾을 수 있나요?",
         "자기소개서는 어떻게 작성해야 하나요?"
@@ -86,6 +97,10 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         exampleQuestionsRecyclerView = findViewById(R.id.exampleQuestionsRecyclerView) // 예시 질문 RecyclerView 초기화
         messageInput = findViewById(R.id.editTextMessage)
         sendButton = findViewById(R.id.buttonSend)
+
+        mainBonggong = findViewById(R.id.main_bonggong)
+        mainText = findViewById(R.id.main_text)
+        mainDescription = findViewById(R.id.main_description)
 
         // 초기화 버튼 초기화 및 클릭 이벤트 설정
         clearButton = findViewById(R.id.btn_clear_chat)
@@ -151,11 +166,22 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         messageInput.setText(question) // 입력창에 질문 추가
         exampleQuestionsRecyclerView.visibility = View.GONE // 예시 질문 숨김
         recyclerView.visibility = View.VISIBLE // 채팅 창 표시
+
+        // 추가한 이미지뷰 숨김
+        mainBonggong.visibility = View.GONE
+        mainText.visibility = View.GONE
+        mainDescription.visibility = View.GONE
     }
 
     private fun sendMessage() {
         val messageText = messageInput.text.toString()
         exampleQuestionsRecyclerView.visibility = View.GONE // 예시 질문 숨김
+
+        // 추가한 이미지뷰 숨김
+        mainBonggong.visibility = View.GONE
+        mainText.visibility = View.GONE
+        mainDescription.visibility = View.GONE
+
 
         if (messageText.isNotEmpty()) {
             val newMessage = Message(messageText, null, true)
