@@ -116,9 +116,14 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         val exampleQuestions = allExampleQuestions.shuffled().take(4)
 
         // RecyclerView에 데이터를 표시할 어댑터 설정
-        adapter = MessageAdapter(messages, MarkdownProcessor(this))
+        adapter = MessageAdapter(messages, MarkdownProcessor(this)){
+            //displayRetryButtonWithShowError()
+            // Retry button이 클릭되었을 때 호출될 메서드
+            unDisplayRetryButtonWithShowError()
+        }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+
 
         // 뷰를 touch 했을 때, 키보드 내리기
         recyclerView.setOnTouchListener { _, event ->
@@ -205,6 +210,35 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         }
     }
 
+    override fun displayRetryButtonWithShowError(){
+
+        //error 뜬경우
+        //messages 마지막 제거 (사용자가 입력한 것)
+        messages.removeLast()
+
+        val errorMessage = Message(
+            text = "응답이 정상적으로 처리되지 않았습니다.\n 다시 시도해주세요.",
+            profileImageRes = R.drawable.bonggong_profile,
+            isUser = false,
+            shouldShowRetryButton = true // retryButton을 보이게 설정
+        )
+        messages.add(errorMessage)
+        // 어댑터에 변경사항 알리기
+        adapter.notifyDataSetChanged()
+
+        //사용자가 보낸 메세지 초기화 (입력창, 보낸거)
+        messageInput.text.clear()
+
+    }
+
+    override fun unDisplayRetryButtonWithShowError(){
+
+        //messages 마지막 제거 (에러메세지.. 그럼 버튼도 날라가지 않을까)
+        messages.removeLast()
+        // 어댑터에 변경사항 알리기
+        adapter.notifyDataSetChanged()
+
+    }
 
     override fun showLoading() {
         TODO("Not yet implemented")

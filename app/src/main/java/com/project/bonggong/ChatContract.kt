@@ -21,6 +21,11 @@ interface ChatContract {
 
         // 에러 메세지 표시
         fun showError(errorMessage: String)
+
+        //에러시 재시도 버튼 표시
+        fun displayRetryButtonWithShowError()
+        //재시도 버튼 클릭시
+        fun unDisplayRetryButtonWithShowError()
     }
 
     // 중간과정 -> 요청 전달, 반환, error 관리 등

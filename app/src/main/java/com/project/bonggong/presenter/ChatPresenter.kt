@@ -38,6 +38,7 @@ class ChatPresenter(
                 view.enqueueTypingText(deltaText)
             }, { error ->
                 view.showError(error.message ?: "알 수 없는 에러가 발생했습니다.")
+                view.displayRetryButtonWithShowError()
             })
         } else {
             // 2. 첫 번째가 아닌 사용자 입력이 들어 왔을 때
@@ -54,6 +55,7 @@ class ChatPresenter(
                 view.enqueueTypingText(deltaText)
             }, { error ->
                 view.showError(error.message ?: "알 수 없는 에러가 발생했습니다.")
+                view.displayRetryButtonWithShowError()
             })
         }
     }
@@ -75,10 +77,12 @@ class ChatPresenter(
                 view.displayGPTResponse(assistantMessage)
             } else {
                 view.showError("No assistant response found.")
+                view.displayRetryButtonWithShowError()
             }
         }, { error ->
             // 오류가 발생했을 때 처리
             view.showError(error.message ?: "An unknown error occurred.")
+            view.displayRetryButtonWithShowError()
         })
     }
 }

@@ -5,6 +5,7 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -14,19 +15,30 @@ import com.project.bonggong.util.MarkdownProcessor
 
 class MessageAdapter(
     private val messages: List<Message>,
-    private val markdownProcessor: MarkdownProcessor
-    ) :  RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val markdownProcessor: MarkdownProcessor,
+    private val retryClickListener: (() -> Unit)? = null
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     // ViewHolder for chatbot messages
-    class ChatbotMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ChatbotMessageViewHolder(itemView: View, retryClickListener: (() -> Unit)?) :
+        RecyclerView.ViewHolder(itemView) {
         val profileImageView: ImageView = itemView.findViewById(R.id.profileImageView)
         val messageTextView: TextView = itemView.findViewById(R.id.messageTextView)
         val moreButton: TextView = itemView.findViewById(R.id.moreButton)
+        val retryButton: ImageButton = itemView.findViewById(R.id.btn_retry_textMessage)
+
+        init {
+            retryButton.setOnClickListener {
+                retryClickListener?.invoke() // 리스너 호출
+            }
+        }
+
     }
 
     // ViewHolder for user messages
     class UserMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val messageTextView: TextView = itemView.findViewById(R.id.messageTextView)
+
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -46,7 +58,7 @@ class MessageAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_chatbot_message, parent, false)
-            ChatbotMessageViewHolder(view)
+            ChatbotMessageViewHolder(view, retryClickListener)
         }
     }
 
@@ -57,6 +69,9 @@ class MessageAdapter(
 
         if (holder is ChatbotMessageViewHolder) {
             holder.itemView.tag = message
+            // retryButton
+            holder.retryButton.visibility =
+                if (message.shouldShowRetryButton) View.VISIBLE else View.GONE
 
             // 메시지 확장 여부에 따라 텍스트 설정
             if (message.isExpanded) {
