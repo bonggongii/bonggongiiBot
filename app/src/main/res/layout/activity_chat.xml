@@ -66,14 +66,16 @@
             android:id="@+id/main_bonggong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/main_bonggong"/>
+            android:src="@drawable/main_bonggong"
+            android:importantForAccessibility="no"/>
 
         <ImageView
             android:id="@+id/main_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/main_text"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginStart="8dp"
+            android:importantForAccessibility="no"/>
     </LinearLayout>
 
     <ImageView
@@ -81,6 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/main_description"
+        android:importantForAccessibility="no"
         android:layout_gravity="center"
         android:layout_marginBottom="50dp"/>
 

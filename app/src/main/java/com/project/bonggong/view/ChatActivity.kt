@@ -1,7 +1,6 @@
 package com.project.bonggong.view
 
 import android.annotation.SuppressLint
-import android.content.ClipDescription
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
