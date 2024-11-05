@@ -10,6 +10,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -33,6 +34,10 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     private lateinit var adapter: MessageAdapter
     private lateinit var presenter: ChatContract.Presenter
     private lateinit var exampleQuestionsAdapter: ExampleQuestionsAdapter
+    private lateinit var clearButton: ImageButton
+    private lateinit var mainBonggong: ImageView
+    private lateinit var mainText: ImageView
+    private lateinit var mainDescription: ImageView
 
     // 메시지를 저장할 리스트 (Message 객체로)
     private val messages = mutableListOf<Message>()
@@ -66,6 +71,15 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         exampleQuestionsRecyclerView = findViewById(R.id.exampleQuestionsRecyclerView) // 예시 질문 RecyclerView 초기화
         messageInput = findViewById(R.id.editTextMessage)
         sendButton = findViewById(R.id.buttonSend)
+        mainBonggong = findViewById(R.id.main_bonggong)
+        mainText = findViewById(R.id.main_text)
+        mainDescription = findViewById(R.id.main_description)
+
+        // 초기화 버튼 초기화 및 클릭 이벤트 설정
+        clearButton = findViewById(R.id.btn_clear_chat)
+        clearButton.setOnClickListener {
+            clearChatHistory() // 초기화 함수 호출
+        }
 
         // 랜덤으로 4개의 질문 선택
         val exampleQuestions = allExampleQuestions.shuffled().take(4)
@@ -125,11 +139,22 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         messageInput.setText(question) // 입력창에 질문 추가
         exampleQuestionsRecyclerView.visibility = View.GONE // 예시 질문 숨김
         recyclerView.visibility = View.VISIBLE // 채팅 창 표시
+
+        // 추가한 이미지뷰 숨김
+        mainBonggong.visibility = View.GONE
+        mainText.visibility = View.GONE
+        mainDescription.visibility = View.GONE
+
     }
 
     private fun sendMessage() {
         val messageText = messageInput.text.toString()
         exampleQuestionsRecyclerView.visibility = View.GONE // 예시 질문 숨김
+
+        // 추가한 이미지뷰 숨김
+        mainBonggong.visibility = View.GONE
+        mainText.visibility = View.GONE
+        mainDescription.visibility = View.GONE
 
         if (messageText.isNotEmpty()) {
             val newMessage = Message(messageText, null, true)
@@ -186,5 +211,14 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
             sendButton.visibility = View.VISIBLE // 버튼을 보이도록 설정
         }
     }
+
+    private fun clearChatHistory() {
+        val itemCount = messages.size
+        messages.clear() // 메시지 리스트 초기화
+        adapter.notifyItemRangeRemoved(0, itemCount) // 0번 인덱스부터 모든 항목 제거
+        Toast.makeText(this, "대화 내용이 초기화되었습니다.", Toast.LENGTH_SHORT).show()
+    }
 }
+
+
 
