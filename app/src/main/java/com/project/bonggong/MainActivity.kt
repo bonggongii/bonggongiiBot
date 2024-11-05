@@ -1,28 +1,40 @@
-// MainActivity.kt
 package com.project.bonggong
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.project.bonggong.view.ChatActivity
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var startChatButton: Button
-
+    private lateinit var chatbotRecyclerView: RecyclerView
+    private val chatbotList = listOf(
+        Chatbot("경기도 일자리 재단", R.drawable.select_chatbot2),
+        Chatbot("경기도 어쩌고", R.drawable.select_chatbot1),
+        Chatbot("경기도 저쩌고", R.drawable.select_chatbot3),
+        Chatbot("다른 지자체 챗봇", R.drawable.select_chatbot4)
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 버튼 초기화
-        startChatButton = findViewById(R.id.buttonStartChat)
+        // RecyclerView 초기화
+        chatbotRecyclerView = findViewById(R.id.recyclerViewChatbots)
+        chatbotRecyclerView.layoutManager = GridLayoutManager(this, 2) // 2열로 설정
 
-        // 버튼 클릭 리스너
-        startChatButton.setOnClickListener {
-            // ChatActivity로 이동하는 인텐트 생성
-            val intent = Intent(this, ChatActivity::class.java)
-            startActivity(intent) // 액티비티 시작
+        // RecyclerView에 Adapter 설정
+        chatbotRecyclerView.adapter = ChatbotAdapter(chatbotList) { index ->
+            if (index == 0) { // 첫 번째 챗봇 선택 시만 ChatActivity로 이동
+                val intent = Intent(this, ChatActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 }
+// 챗봇 데이터 클래스
+data class Chatbot(val name: String, val imageResId: Int)

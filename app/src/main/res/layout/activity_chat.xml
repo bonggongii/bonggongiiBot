@@ -126,6 +126,7 @@
                 android:importantForAutofill="no"
                 android:minHeight="48dp"
                 android:maxLines="5"
+                android:textSize="16sp"
                 android:textColor="@color/textColor"
                 android:textColorHint="@color/textColorHint"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -3,10 +3,12 @@
     <string name="editTextMessageHint">질문을 입력하세요</string>
     <string name="chatbot_sample_message">chatbot Sample Message</string>
     <string name="user_sample_message">User Sample Message</string>
-    <string name="button_start_chat">Start Chat</string>
+    <string name="button_start_chat">경기도 일자리 재단</string>
     <string name="moreText">더보기</string>
     <string name="reset_button_description">reset</string>
     <string name="menu_button_description">햄버거메뉴</string>
     <string name="title">봉공이에게 물어봐!</string>
     <string name="backgroundimg">backgroundImg</string>
+    <string name="chatbot_image">chatbot image</string>
+    <string name="chooseChatbot">원하는 챗봇을 선택하세요!</string>
 </resources>
