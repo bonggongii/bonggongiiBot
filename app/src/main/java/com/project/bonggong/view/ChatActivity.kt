@@ -48,6 +48,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     private lateinit var mainBonggong: ImageView
     private lateinit var mainText: ImageView
     private lateinit var mainDescription: ImageView
+    private lateinit var backgroundImage: ImageView
 
 
     // 메시지를 저장할 리스트 (Message 객체로)
@@ -101,6 +102,9 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         mainBonggong = findViewById(R.id.main_bonggong)
         mainText = findViewById(R.id.main_text)
         mainDescription = findViewById(R.id.main_description)
+        backgroundImage = findViewById(R.id.background_image)
+
+        backgroundImage.visibility = View.GONE // 배경이미지 안보이도록 설정
 
         // 초기화 버튼 초기화 및 클릭 이벤트 설정
         clearButton = findViewById(R.id.btn_clear_chat)
@@ -166,6 +170,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         messageInput.setText(question) // 입력창에 질문 추가
         exampleQuestionsRecyclerView.visibility = View.GONE // 예시 질문 숨김
         recyclerView.visibility = View.VISIBLE // 채팅 창 표시
+        backgroundImage.visibility = View.VISIBLE //배경 나타나기
 
         // 추가한 이미지뷰 숨김
         mainBonggong.visibility = View.GONE
@@ -176,6 +181,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     private fun sendMessage() {
         val messageText = messageInput.text.toString()
         exampleQuestionsRecyclerView.visibility = View.GONE // 예시 질문 숨김
+        backgroundImage.visibility = View.VISIBLE //배경 나타나기
 
         // 추가한 이미지뷰 숨김
         mainBonggong.visibility = View.GONE
