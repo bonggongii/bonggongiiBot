@@ -10,6 +10,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -33,6 +34,9 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     private lateinit var adapter: MessageAdapter
     private lateinit var presenter: ChatContract.Presenter
     private lateinit var exampleQuestionsAdapter: ExampleQuestionsAdapter
+    private lateinit var mainBonggong: ImageView
+    private lateinit var mainText: ImageView
+    private lateinit var mainDescription: ImageView
 
     // 메시지를 저장할 리스트 (Message 객체로)
     private val messages = mutableListOf<Message>()
@@ -66,6 +70,10 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         exampleQuestionsRecyclerView = findViewById(R.id.exampleQuestionsRecyclerView) // 예시 질문 RecyclerView 초기화
         messageInput = findViewById(R.id.editTextMessage)
         sendButton = findViewById(R.id.buttonSend)
+        mainBonggong = findViewById(R.id.main_bonggong)
+        mainText = findViewById(R.id.main_text)
+        mainDescription = findViewById(R.id.main_description)
+
 
         // 랜덤으로 4개의 질문 선택
         val exampleQuestions = allExampleQuestions.shuffled().take(4)
@@ -125,11 +133,22 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         messageInput.setText(question) // 입력창에 질문 추가
         exampleQuestionsRecyclerView.visibility = View.GONE // 예시 질문 숨김
         recyclerView.visibility = View.VISIBLE // 채팅 창 표시
+
+        // 추가한 이미지뷰 숨김
+        mainBonggong.visibility = View.GONE
+        mainText.visibility = View.GONE
+        mainDescription.visibility = View.GONE
+
     }
 
     private fun sendMessage() {
         val messageText = messageInput.text.toString()
         exampleQuestionsRecyclerView.visibility = View.GONE // 예시 질문 숨김
+
+        // 추가한 이미지뷰 숨김
+        mainBonggong.visibility = View.GONE
+        mainText.visibility = View.GONE
+        mainDescription.visibility = View.GONE
 
         if (messageText.isNotEmpty()) {
             val newMessage = Message(messageText, null, true)

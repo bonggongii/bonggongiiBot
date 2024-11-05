@@ -1,54 +1,259 @@
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/backgroundColor">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/exampleQuestionsRecyclerView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:breakStrategy="simple"/>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+
+        android:padding="4dp"
+
+        android:gravity="center_vertical"
+
+        android:background="@drawable/header_background"
+
+        >
+
+
+
+
+        <ImageButton
+
+            android:id="@+id/btn_menu"
+
+            android:layout_width="0dp"
+
+            android:layout_height="48dp"
+
+            android:layout_weight="1"
+
+            android:src="@drawable/ic_menu"
+
+            android:background="@color/messageBackgroundColor"
+
+            android:contentDescription="@string/menu_button_description"
+
+            />
+
+
+
+
+        <TextView
+
+            android:layout_width="0dp"
+
+            android:layout_height="wrap_content"
+
+            android:layout_weight="6"
+
+            android:text="@string/title"
+
+            android:gravity="center"
+
+            android:textColor="@color/textColor"
+
+            android:textSize="18sp"
+
+            android:layout_marginStart="8dp"
+
+            android:layout_marginEnd="8dp"/>
+
+
+
+
+        <ImageButton
+
+            android:id="@+id/btn_clear_chat"
+
+            android:layout_width="0dp"
+
+            android:layout_height="48dp"
+
+            android:layout_weight="1"
+
+            android:src="@drawable/ic_refresh"
+
+            android:background="@color/messageBackgroundColor"
+
+            android:contentDescription="@string/reset_button_description"
+
+            />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+
+        android:layout_height="0dp"
+
+        android:breakStrategy="simple"
+
+        android:layout_weight="1"
+
+        />
+
+
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+
+        android:gravity="center"
+
+        android:layout_marginBottom="8dp">
+
+
+
+
+        <ImageView
+
+            android:id="@+id/main_bonggong"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:src="@drawable/main_bonggong"
+
+            android:importantForAccessibility="no"/>
+
+
+
+
+        <ImageView
+
+            android:id="@+id/main_text"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:src="@drawable/main_text"
+
+            android:layout_marginStart="8dp"
+
+            android:importantForAccessibility="no"/>
+
+    </LinearLayout>
+
+
+
+
+    <ImageView
+
+        android:id="@+id/main_description"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/main_description"
+
+        android:importantForAccessibility="no"
+
+        android:layout_gravity="center"
+
+        android:layout_marginBottom="50dp"/>
+
+
+
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+
         android:id="@+id/exampleQuestionsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
+
         android:layout_gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/editTextMessage"/>
 
-    <EditText
-        android:id="@+id/editTextMessage"
-        android:importantForAutofill="no"
-        android:inputType="textMultiLine"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:maxLines="5"
-        android:hint="@string/editTextMessageHint"
-        android:textColorHint="@color/textColorHint"
-        android:textColor="@color/textColor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSend"
-        android:layout_margin="12dp"/>
+        />
 
-    <ImageButton
-        android:id="@+id/buttonSend"
-        android:layout_width="wrap_content"
+
+
+
+    <LinearLayout
+
+        android:orientation="horizontal"
+
+        android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:importantForAccessibility="no"
-        android:src="@drawable/buttonsend_abled"
-        android:background="@color/backgroundColor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="visible"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        >
+
+
+
+
+        <EditText
+
+            android:importantForAutofill="no"
+
+            android:inputType="textMultiLine"
+
+            android:id="@+id/editTextMessage"
+
+            android:layout_width="0dp"
+
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1"
+
+            android:layout_margin="12dp"
+
+            android:minHeight="48dp"
+
+            android:hint="@string/editTextMessageHint"
+
+            android:textColorHint="@color/textColorHint"
+
+            android:textColor="@color/textColor"
+
+            />
+
+
+
+
+        <ImageButton
+
+            android:id="@+id/buttonSend"
+
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:layout_margin="12dp"
+
+            android:importantForAccessibility="no"
+
+            android:src="@drawable/buttonsend_abled"
+
+            android:background="@color/backgroundColor"
+
+            android:visibility="visible"
+
+            />
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
