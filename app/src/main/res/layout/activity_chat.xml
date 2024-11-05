@@ -10,6 +10,7 @@
         android:id="@+id/background_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
         android:src="@drawable/chat_background"
         android:scaleType="center"
         android:layout_gravity="center" />
@@ -79,12 +80,14 @@
                 android:id="@+id/main_bonggong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:importantForAccessibility="no"
                 android:src="@drawable/main_bonggong" />
 
             <ImageView
                 android:id="@+id/main_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:importantForAccessibility="no"
                 android:src="@drawable/main_text"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
@@ -93,6 +96,7 @@
             android:id="@+id/main_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
             android:src="@drawable/main_description"
             android:layout_marginBottom="50dp" />
 
