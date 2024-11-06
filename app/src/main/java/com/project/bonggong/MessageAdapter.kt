@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.ImageView
+//import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+//import com.bumptech.glide.Glide
 import com.project.bonggong.model.Message
 import com.project.bonggong.util.MarkdownProcessor
 
@@ -22,7 +22,7 @@ class MessageAdapter(
     // ViewHolder for chatbot messages
     class ChatbotMessageViewHolder(itemView: View, retryClickListener: (() -> Unit)?) :
         RecyclerView.ViewHolder(itemView) {
-        val profileImageView: ImageView = itemView.findViewById(R.id.profileImageView)
+//        val profileImageView: ImageView = itemView.findViewById(R.id.profileImageView)
         val messageTextView: TextView = itemView.findViewById(R.id.messageTextView)
         val moreButton: TextView = itemView.findViewById(R.id.moreButton)
         val retryButton: ImageButton = itemView.findViewById(R.id.btn_retry_textMessage)
