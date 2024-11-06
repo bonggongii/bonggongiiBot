@@ -78,17 +78,17 @@ dependencies {
     implementation (libs.navigation.ui.ktx)
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
     // OkHttp
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
 
     // markdown 라이브러리 추가
-    implementation ("io.noties.markwon:core:4.6.2")
-    implementation ("io.noties.markwon:linkify:4.6.2")
+    implementation (libs.core)
+    implementation (libs.linkify)
 
     //Material Components 라이브러리 추가
-    implementation ("com.google.android.material:material:1.8.0")
+    implementation (libs.material)
 }
