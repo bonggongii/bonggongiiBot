@@ -2,6 +2,8 @@ package com.project.bonggong.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -323,10 +325,25 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     }
 
     private fun clearChatHistory() {
-        val itemCount = messages.size
-        messages.clear() // 메시지 리스트 초기화
-        adapter.notifyItemRangeRemoved(0, itemCount) // 0번 인덱스부터 모든 항목 제거
+        finish() // 액티비티 종료
+
+        // 새로운 액티비티가 열리는 것을 알아채지 못하도록, 애니메이션 제거.
+        applyTransition(OVERRIDE_TRANSITION_CLOSE,0,0)
+        startActivity(Intent(this, ChatActivity::class.java))
+        applyTransition(OVERRIDE_TRANSITION_OPEN,0,0)
+
         Toast.makeText(this, "대화 내용이 초기화되었습니다.", Toast.LENGTH_SHORT).show()
+    }
+
+    // 버전별 activity 애니메이션 적용 (clearChatHistory() - helper)
+    private fun applyTransition(overrideType: Int, enterAnim: Int, exitAnim: Int) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            // API 34 이상
+            overrideActivityTransition(overrideType, enterAnim, exitAnim)
+        } else {
+            // API 34 미만
+            overridePendingTransition(enterAnim, exitAnim)
+        }
     }
     
     // Activity가 파괴될 때, 코루틴 리소스 정리
