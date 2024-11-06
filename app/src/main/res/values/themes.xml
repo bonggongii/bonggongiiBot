@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Bonggongii" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/backgroundColor</item>  <!-- 버튼, 상단바 기본 색상 -->

@@ -90,5 +90,5 @@ dependencies {
     implementation ("io.noties.markwon:linkify:4.6.2")
 
     //Material Components 라이브러리 추가
-    implementation ("com.google.android.material:material:1.10.0")
+    implementation ("com.google.android.material:material:1.8.0")
 }

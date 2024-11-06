@@ -1,19 +1,14 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/backgroundColor">
 
     <!-- 배경 이미지 -->
-    <ImageView
-        android:id="@+id/background_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:importantForAccessibility="no"
-        android:src="@drawable/chat_background"
-        android:scaleType="center"
-        android:layout_gravity="center" />
+    <include
+        layout="@layout/background_image" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -22,45 +17,9 @@
         android:fitsSystemWindows="true"
         android:background="@android:color/transparent">
 
-        <!-- 헤더 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="4dp"
-            android:gravity="center_vertical"
-            android:background="@drawable/header_background">
-
-            <!-- 메뉴 버튼, 제목, 초기화 버튼 -->
-            <ImageButton
-                android:id="@+id/btn_menu"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_menu"
-                android:background="@color/messageBackgroundColor"
-                android:contentDescription="@string/menu_button_description" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:text="@string/title"
-                android:gravity="center"
-                android:textColor="@color/textColor"
-                android:textSize="18sp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp" />
-
-            <ImageButton
-                android:id="@+id/btn_clear_chat"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_refresh"
-                android:background="@color/messageBackgroundColor"
-                android:contentDescription="@string/reset_button_description" />
-        </LinearLayout>
+        <!-- 헤더 레이아웃 -->
+        <include
+            layout="@layout/header" />
 
         <!-- 메인 컨텐츠 영역들 -->
         <androidx.recyclerview.widget.RecyclerView
@@ -69,82 +28,20 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="8dp">
+        <!-- Intro 레이아웃 포함 -->
+        <include
+            layout="@layout/intro" />
 
-            <ImageView
-                android:id="@+id/main_bonggong"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:importantForAccessibility="no"
-                android:src="@drawable/main_bonggong" />
-
-            <ImageView
-                android:id="@+id/main_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:importantForAccessibility="no"
-                android:src="@drawable/main_text"
-                android:layout_marginStart="8dp" />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/main_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:importantForAccessibility="no"
-            android:src="@drawable/main_description"
-            android:layout_marginBottom="50dp" />
-
+        <!-- 예시 질문 RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/exampleQuestionsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp" />
 
-        <!-- 입력창과 전송 버튼을 포함한 레이아웃 -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:padding="6dp"
-            android:background="@drawable/header_background">
+        <!-- 입력창과 전송 버튼 레이아웃 포함 -->
+        <include
+            layout="@layout/input" />
 
-            <!-- 입력창 -->
-            <EditText
-                android:id="@+id/editTextMessage"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:hint="@string/editTextMessageHint"
-                android:inputType="textMultiLine"
-                android:importantForAutofill="no"
-                android:minHeight="48dp"
-                android:maxLines="5"
-                android:textSize="16sp"
-                android:textColor="@color/textColor"
-                android:textColorHint="@color/textColorHint"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/buttonSend"/>
-
-            <!-- 전송 버튼 -->
-            <ImageButton
-                android:id="@+id/buttonSend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:importantForAccessibility="no"
-                android:src="@drawable/buttonsend_abled"
-                android:background="@drawable/header_background"
-                android:layout_marginStart="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </FrameLayout>
-
