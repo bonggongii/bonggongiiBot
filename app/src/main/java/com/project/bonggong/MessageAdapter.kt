@@ -101,12 +101,13 @@ class MessageAdapter(
                 message.isExpanded = !message.isExpanded
                 notifyItemChanged(position)
             }
-
+            //이미지파일을 로컬에 다 저장을 하고, xml에서 다 지정해놔서 굳이 쓸 필요 없는 라이브러리 같습니다~@
 //            // Glide로 프로필 이미지 로드
 //            Glide.with(holder.itemView.context)
 //                .load(message.profileImageRes)
 //                .placeholder(R.drawable.bonggong_profile)
 //                .into(holder.profileImageView)
+
 
         } else if (holder is UserMessageViewHolder) {
             holder.messageTextView.text = message.text
