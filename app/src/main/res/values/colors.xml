@@ -9,7 +9,7 @@
     <color name="backgroundColor_2">#18181B</color>
     <color name="backgroundColor_3">#27272B</color>
     <color name="messageBackgroundColor">#18181B</color>
-    <color name="userMessageStrokeColor">#27272B</color>
+    <color name="userMessageStrokeColor">#3165AA</color>
     <color name="chatbotMessageStrokeColor">#36B7C3</color>
     <color name="pressedStrokeColor">#36B7C3</color>
     <color name="defaultStrokeColor">#18181B</color>
