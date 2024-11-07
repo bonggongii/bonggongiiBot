@@ -1,4 +1,4 @@
-<androidx.cardview.widget.CardView
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cardView"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,7 +8,9 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="4dp"
-    app:cardBackgroundColor="@color/messageBackgroundColor">
+    app:cardBackgroundColor="@color/messageBackgroundColor"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/defaultStrokeColor">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,5 +43,6 @@
             android:textColor="@color/textColor"
             android:textSize="14sp"
             tools:ignore="RtlCompat" />
+
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
