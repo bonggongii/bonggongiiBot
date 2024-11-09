@@ -5,22 +5,11 @@
     android:fitsSystemWindows="true"
     android:background="@color/backgroundColor">
 
-
-    <!-- 로딩 중임을 표시하는 ProgressBar (중앙에 위치) -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        style="?android:attr/progressBarStyleLarge"
-        android:indeterminateTint="@android:color/holo_blue_bright" /> <!-- 기본적으로 숨김 상태 -->
-
-
     <!-- 배경 이미지 -->
     <include
         layout="@layout/background_image" />
 
+    <!-- 메인 콘텐츠 영역 -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -32,12 +21,29 @@
         <include
             layout="@layout/header" />
 
-        <!-- 메인 컨텐츠 영역들 -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <!-- RecyclerView와 ProgressBar를 겹치도록 FrameLayout으로 감쌈 -->
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1">
+
+            <!-- 메인 컨텐츠 RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- 로딩 중임을 표시하는 ProgressBar (중앙에 위치) -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                style="?android:attr/progressBarStyleLarge"
+                android:indeterminateTint="@android:color/holo_blue_bright" />
+
+        </FrameLayout>
 
         <!-- Intro 레이아웃 포함 -->
         <include
@@ -55,6 +61,4 @@
             layout="@layout/input" />
 
     </LinearLayout>
-
-
 </FrameLayout>

@@ -10,8 +10,8 @@ interface ChatContract {
     // UI 관련된 동작 처리
     interface View {
         // 메세지 입력 후, 답변 기다리는 로딩 보여주기 -> 없을 수 있음
-        //fun showLoading()
-        //fun hideLoading()
+        fun showLoading()
+        fun hideLoading()
 
         // gpt 응답 표시 : non-streaming
         fun displayGPTResponse(response: String)

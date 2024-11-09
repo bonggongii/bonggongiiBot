@@ -36,8 +36,10 @@ class ChatPresenter(
 
             // 1-2. stream 방식
             model.createThreadAndRunStream(input, { deltaText ->
+                view.hideLoading()
                 view.enqueueTypingText(deltaText)
             }, { error ->
+                view.hideLoading()
                 view.showError(error.message ?: "알 수 없는 에러가 발생했습니다.")
                 view.displayRetryButtonWithShowError()
                 callback(false) //실패 콜백 호출

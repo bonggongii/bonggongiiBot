@@ -219,7 +219,6 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
 
             presenter.onUserInput(messageText) { success ->
                 // 성공 또는 실패에 따른 로딩 상태 숨김
-                hideLoading()
                 if (!success) showError("메시지 전송 실패")
             }
             hideKeyboard()
@@ -248,21 +247,17 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     }
 
 
-    private fun showLoading() {
+    override fun showLoading() {
         runOnUiThread {
             Log.d("ChatActivity", "showProgressLoading called on thread: ${Thread.currentThread().name}")
             isWaitingForResponse = true
             progressBar.visibility = View.VISIBLE
             updateSendButtonState()  // 상태에 따라 전송 버튼 비활성화 및 아이콘 업데이트
-            // 추가 확인 코드
-            Log.d("ChatActivity", "ProgressBar visibility: ${progressBar.visibility}")
-            Log.d("ChatActivity", "sendButton enabled: ${sendButton.isEnabled}")
         }
     }
 
-    private fun hideLoading() {
+    override fun hideLoading() {
         runOnUiThread {
-            Log.d("ChatActivity", "hideProgressLoading called on thread: ${Thread.currentThread().name}")
             isWaitingForResponse = false
             progressBar.visibility = View.GONE
             updateSendButtonState()  // 상태에 따라 전송 버튼 비활성화 및 아이콘 업데이트
