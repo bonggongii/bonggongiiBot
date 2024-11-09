@@ -15,6 +15,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,6 +52,11 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     private lateinit var mainText: ImageView
     private lateinit var mainDescription: ImageView
     private lateinit var backgroundImage: ImageView
+    private lateinit var progressBar: ProgressBar
+    private var isWaitingForResponse = false
+
+
+
 
 
     // 메시지를 저장할 리스트 (Message 객체로)
@@ -106,6 +112,9 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         mainDescription = findViewById(R.id.main_description)
         backgroundImage = findViewById(R.id.background_image)
 
+        // 초기화 작업
+        progressBar = findViewById(R.id.progressBar)
+
         backgroundImage.visibility = View.GONE // 배경이미지 안보이도록 설정
 
         // 초기화 버튼 초기화 및 클릭 이벤트 설정
@@ -144,8 +153,6 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
             }
         }
 
-        // 초기 전송 버튼 상태 설정
-        updateSendButtonState()
 
         // text-watcher
         messageInput.addTextChangedListener(object: TextWatcher {
@@ -159,6 +166,9 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
                 updateSendButtonState()
             }
         })
+
+
+
         // 예시 질문 어댑터 설정
         exampleQuestionsAdapter = ExampleQuestionsAdapter(exampleQuestions) { selectedQuestion ->
             onExampleQuestionSelected(selectedQuestion)
@@ -166,6 +176,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         // 그리드 레이아웃을 적용하여 2열로 설정
         exampleQuestionsRecyclerView.layoutManager = GridLayoutManager(this, 2)
         exampleQuestionsRecyclerView.adapter = exampleQuestionsAdapter
+
 
         //버튼 클릭 리스너
         sendButton.setOnClickListener {
@@ -203,14 +214,65 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
             recyclerView.scrollToPosition(messages.size - 1)
             messageInput.text.clear()
 
-            // presenter에 사용자 입력 전달하기
-            presenter.onUserInput(messageText)
+            // 로딩 상태 표시
+            showLoading()
 
-            // 키보드 내리기
+            presenter.onUserInput(messageText) { success ->
+                // 성공 또는 실패에 따른 로딩 상태 숨김
+                hideLoading()
+                if (!success) showError("메시지 전송 실패")
+            }
             hideKeyboard()
-
         }
     }
+
+
+    // 전송 버튼 상태를 업데이트하는 함수
+    private fun updateSendButtonState() {
+        // 응답 대기 중이면 비활성화된 아이콘을 유지하고 버튼도 비활성화
+        if (isWaitingForResponse) {
+            sendButton.setImageResource(R.drawable.buttonsend_disabled)
+            sendButton.isEnabled = false
+        } else {
+            // 응답 대기 중이 아닐 때는 텍스트에 따라 아이콘과 버튼 상태 변경
+            if (messageInput.text.isNullOrBlank()) {
+                sendButton.setImageResource(R.drawable.buttonsend_disabled)
+                sendButton.isEnabled = false
+            } else {
+                sendButton.setImageResource(R.drawable.buttonsend_abled)
+                sendButton.isEnabled = true
+            }
+        }
+
+        sendButton.visibility = View.VISIBLE // 버튼을 보이도록 설정
+    }
+
+
+    private fun showLoading() {
+        runOnUiThread {
+            Log.d("ChatActivity", "showProgressLoading called on thread: ${Thread.currentThread().name}")
+            isWaitingForResponse = true
+            progressBar.visibility = View.VISIBLE
+            updateSendButtonState()  // 상태에 따라 전송 버튼 비활성화 및 아이콘 업데이트
+            // 추가 확인 코드
+            Log.d("ChatActivity", "ProgressBar visibility: ${progressBar.visibility}")
+            Log.d("ChatActivity", "sendButton enabled: ${sendButton.isEnabled}")
+        }
+    }
+
+    private fun hideLoading() {
+        runOnUiThread {
+            Log.d("ChatActivity", "hideProgressLoading called on thread: ${Thread.currentThread().name}")
+            isWaitingForResponse = false
+            progressBar.visibility = View.GONE
+            updateSendButtonState()  // 상태에 따라 전송 버튼 비활성화 및 아이콘 업데이트
+            // 추가 확인 코드
+            Log.d("ChatActivity", "ProgressBar visibility: ${progressBar.visibility}")
+            Log.d("ChatActivity", "sendButton enabled: ${sendButton.isEnabled}")
+        }
+    }
+
+
 
     override fun displayRetryButtonWithShowError(){
 
@@ -242,13 +304,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
 
     }
 
-    override fun showLoading() {
-        TODO("Not yet implemented")
-    }
 
-    override fun hideLoading() {
-        TODO("Not yet implemented")
-    }
 
     override fun displayGPTResponse(response: String) {
         // GPT 응답 메세지를 리스트에 추가
@@ -312,16 +368,6 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(messageInput.windowToken, 0)
         messageInput.clearFocus()  // 포커스를 제거하여 키보드가 다시 나타나지 않도록 함
-    }
-
-    private fun updateSendButtonState() {
-        if (messageInput.text.isNullOrBlank()) {
-            sendButton.setImageResource(R.drawable.buttonsend_disabled) // 비활성화 이미지로 변경
-            sendButton.visibility = View.VISIBLE // 버튼을 보이도록 설정
-        } else {
-            sendButton.setImageResource(R.drawable.buttonsend_abled) // 활성화 이미지로 변경
-            sendButton.visibility = View.VISIBLE // 버튼을 보이도록 설정
-        }
     }
 
     private fun clearChatHistory() {

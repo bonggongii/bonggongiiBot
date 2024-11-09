@@ -5,6 +5,18 @@
     android:fitsSystemWindows="true"
     android:background="@color/backgroundColor">
 
+
+    <!-- 로딩 중임을 표시하는 ProgressBar (중앙에 위치) -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleLarge"
+        android:indeterminateTint="@android:color/holo_blue_bright" /> <!-- 기본적으로 숨김 상태 -->
+
+
     <!-- 배경 이미지 -->
     <include
         layout="@layout/background_image" />
@@ -43,4 +55,6 @@
             layout="@layout/input" />
 
     </LinearLayout>
+
+
 </FrameLayout>

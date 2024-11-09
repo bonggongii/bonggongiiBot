@@ -11,7 +11,8 @@ class ChatPresenter(
     private val lengthLimit = 200
     private var threadId: String? = null  // thread 생성 여부를 확인
 
-    override fun onUserInput(input: String) {
+    override fun onUserInput(input: String, callback: (Boolean) -> Unit) {
+
 
         // 입력 길이 검증
         if (input.length > lengthLimit) {
@@ -39,7 +40,10 @@ class ChatPresenter(
             }, { error ->
                 view.showError(error.message ?: "알 수 없는 에러가 발생했습니다.")
                 view.displayRetryButtonWithShowError()
-            })
+                callback(false) //실패 콜백 호출
+            }).also {
+                callback(true) // 성공 콜백 호출 (요청이 성공적으로 전송됨)
+            }
         } else {
             // 2. 첫 번째가 아닌 사용자 입력이 들어 왔을 때
             // run 생성 (message 추가)
@@ -56,7 +60,10 @@ class ChatPresenter(
             }, { error ->
                 view.showError(error.message ?: "알 수 없는 에러가 발생했습니다.")
                 view.displayRetryButtonWithShowError()
-            })
+                callback(false)
+            }).also {
+                callback(true)
+            }
         }
     }
 
