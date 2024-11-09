@@ -28,10 +28,8 @@ interface ChatContract {
         fun unDisplayRetryButtonWithShowError()
     }
 
-    // 중간과정 -> 요청 전달, 반환, error 관리 등
     interface Presenter {
-        // 사용자 메세지 처리
-        fun onUserInput(input: String)
+        fun onUserInput(input: String, callback: (Boolean) -> Unit) // 콜백 추가
     }
 
     // ChatGPT api 통신 처리
