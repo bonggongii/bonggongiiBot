@@ -26,6 +26,6 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:textColor="@android:color/white"
-            android:background="@color/userMessageStrokeColor" />
+            android:background="@color/backgroundColor" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
