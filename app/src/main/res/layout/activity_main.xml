@@ -5,17 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/backgroundColor_3">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/chooseChatbot"
+        android:textColor="@color/textColor"
         android:paddingTop="70dp"
         android:textSize="22sp"
         android:gravity="center"
-
-        app:layout_constraintHorizontal_bias="0.7"/>
+        app:layout_constraintHorizontal_bias="0.7"
+        tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewChatbots"

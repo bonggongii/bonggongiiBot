@@ -3,7 +3,7 @@ package com.project.bonggong
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ImageView
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,9 +15,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var chatbotRecyclerView: RecyclerView
     private val chatbotList = listOf(
         Chatbot("경기도 일자리 재단", R.drawable.select_chatbot2),
-        Chatbot("경기도 어쩌고", R.drawable.select_chatbot1),
-        Chatbot("경기도 저쩌고", R.drawable.select_chatbot3),
-        Chatbot("다른 지자체 챗봇", R.drawable.select_chatbot4)
+        Chatbot("경기도 000 재단", R.drawable.select_chatbot1),
+        Chatbot("경기도 00국", R.drawable.select_chatbot3),
+        Chatbot("경기도 00원", R.drawable.select_chatbot4)
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
