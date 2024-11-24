@@ -37,29 +37,27 @@
         android:gravity="left"
         android:paddingHorizontal="20dp"
         android:paddingBottom="40dp"
-        android:text="Copyright © 2023 GYEONGGI PROVINCE. All Rights Reserved.\n
-본 앱에서는 GYEONGGI PROVINCE에서 제공한 캐릭터를 공공누리 제3유형(출처표시 + 변경금지) 조건에 따라 사용하고 있습니다."
+        android:text="Copyright © 2023 GYEONGGI PROVINCE. All Rights Reserved.\n본 앱에서는 GYEONGGI PROVINCE에서 제공한 캐릭터를 공공누리 제3유형(출처표시 + 변경금지) 조건에 따라 사용하고 있습니다."
         android:textColor="@color/textColor"
         android:textSize="10sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="644dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/termsTextView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="572dp"
-        android:autoLink="none"
+        android:layout_margin="16dp"
+        android:gravity="center"
         android:clickable="true"
         android:linksClickable="true"
-        android:padding="16dp"
-        android:text="@string/terms_link"
         android:textColorLink="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

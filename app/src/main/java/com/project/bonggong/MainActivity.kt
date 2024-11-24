@@ -1,6 +1,7 @@
 package com.project.bonggong
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
@@ -13,7 +14,6 @@ import com.project.bonggong.view.ChatActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var startChatButton: Button
     private lateinit var chatbotRecyclerView: RecyclerView
     private val chatbotList = listOf(
         Chatbot("경기도 일자리 재단", R.drawable.select_chatbot2),
@@ -39,9 +39,8 @@ class MainActivity : AppCompatActivity() {
 
         // 약관 링크 TextView 설정
         val termsTextView = findViewById<TextView>(R.id.termsTextView)
-        termsTextView.text = Html.fromHtml(getString(R.string.terms_link), Html.FROM_HTML_MODE_LEGACY)
+        termsTextView.text = Html.fromHtml(getString(R.string.terms_and_policy), Html.FROM_HTML_MODE_LEGACY)
         termsTextView.movementMethod = LinkMovementMethod.getInstance() // 링크 클릭 활성화
-
     }
 }
 // 챗봇 데이터 클래스
