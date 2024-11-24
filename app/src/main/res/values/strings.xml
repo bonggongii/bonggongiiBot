@@ -11,4 +11,5 @@
     <string name="backgroundimg">backgroundImg</string>
     <string name="chatbot_image">chatbot image</string>
     <string name="chooseChatbot">원하는 챗봇을 선택하세요!</string>
+    <string name="terms_link"><![CDATA[약관<a href="https://speckle-devourer-c3c.notion.site/a4e70349e2c449dfa401092eddf3da5a?pvs=4"></a>]]></string>
 </resources>

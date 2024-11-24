@@ -45,6 +45,21 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="644dp" />
 
+    <TextView
+        android:id="@+id/termsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="572dp"
+        android:autoLink="none"
+        android:clickable="true"
+        android:linksClickable="true"
+        android:padding="16dp"
+        android:text="@string/terms_link"
+        android:textColorLink="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

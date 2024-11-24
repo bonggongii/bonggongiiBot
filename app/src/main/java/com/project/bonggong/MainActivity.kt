@@ -2,8 +2,10 @@ package com.project.bonggong
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
+import android.text.method.LinkMovementMethod
 import android.widget.Button
-import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +36,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+
+        // 약관 링크 TextView 설정
+        val termsTextView = findViewById<TextView>(R.id.termsTextView)
+        termsTextView.text = Html.fromHtml(getString(R.string.terms_link), Html.FROM_HTML_MODE_LEGACY)
+        termsTextView.movementMethod = LinkMovementMethod.getInstance() // 링크 클릭 활성화
+
     }
 }
 // 챗봇 데이터 클래스
