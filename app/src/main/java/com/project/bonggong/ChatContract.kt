@@ -1,10 +1,5 @@
 package com.project.bonggong
 
-import com.project.bonggong.api.data.MessageResponse
-import com.project.bonggong.api.data.RunResponse
-import com.project.bonggong.model.Message
-import okhttp3.ResponseBody
-
 interface ChatContract {
 
     // UI 관련된 동작 처리
@@ -34,24 +29,10 @@ interface ChatContract {
 
     // ChatGPT api 통신 처리
     interface Model {
-        // thread 생성 및 message 추가, run 생성
-        // non stream 방식
-        fun createThreadAndRun(input: String, callback: (RunResponse) -> Unit, errorCallback: (Throwable) -> Unit)
-        // stream 방식
+        // thread 생성 및 message 추가, run 생성 (stream 방식)
         fun createThreadAndRunStream(input: String, threadCallback: (String) -> Unit, errorCallback: (Throwable) -> Unit)
 
-        // run 생성
-        // non stream 방식
-        fun createRun(input: String, threadId: String, callback: (RunResponse) -> Unit, errorCallback: (Throwable) -> Unit)
-        // stream 방식
+        // run 생성 (stream 방식)
         fun createRunStream(input: String, threadId: String, threadCallback: (String) -> Unit, errorCallback: (Throwable) -> Unit)
-
-        // run 검색 (retrieve)
-        fun retrieveRun(threadId: String, runId: String, output: (List<MessageResponse>) -> Unit, errorCallback: (Throwable) -> Unit)
-        // 일정 시간 대기 후 run 검색 재시도
-        fun delayRetry(threadId: String, runId: String, output: (List<MessageResponse>) -> Unit, errorCallback: (Throwable) -> Unit)
-
-        // 해당 thread의 message list 가져오기
-        fun listMessages(threadId: String, output: (List<MessageResponse>) -> Unit, errorCallback: (Throwable) -> Unit)
     }
 }
