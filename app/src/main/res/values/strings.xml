@@ -6,7 +6,7 @@
     <string name="button_start_chat">경기도 일자리 재단</string>
     <string name="moreText">더보기</string>
     <string name="reset_button_description">reset</string>
-    <string name="menu_button_description">햄버거메뉴</string>
+    <string name="left_button_description">이전</string>
     <string name="title">봉공이에게 물어봐!</string>
     <string name="backgroundimg">backgroundImg</string>
     <string name="chatbot_image">chatbot image</string>

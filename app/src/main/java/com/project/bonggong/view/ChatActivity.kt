@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.bonggong.ChatContract
 import com.project.bonggong.ExampleQuestionsAdapter
+import com.project.bonggong.MainActivity
 import com.project.bonggong.MessageAdapter
 import com.project.bonggong.R
 import com.project.bonggong.model.GptApiRequest
@@ -48,6 +49,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     private lateinit var presenter: ChatContract.Presenter
     private lateinit var exampleQuestionsAdapter: ExampleQuestionsAdapter
     private lateinit var clearButton: ImageButton
+    private lateinit var leftButton: ImageButton
     private lateinit var mainBonggong: ImageView
     private lateinit var mainText: ImageView
     private lateinit var mainDescription: ImageView
@@ -122,6 +124,14 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         clearButton.setOnClickListener {
             clearChatHistory() // 초기화 함수 호출
         }
+
+        // 이전 메뉴로 이동 버튼 초기화 및 클릭 이벤트 설정
+        leftButton = findViewById(R.id.btn_left)
+        leftButton.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
 
         // 랜덤으로 4개의 질문 선택
         val exampleQuestions = allExampleQuestions.shuffled().take(4)

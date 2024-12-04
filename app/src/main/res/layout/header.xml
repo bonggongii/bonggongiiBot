@@ -9,13 +9,13 @@
 
     <!-- 메뉴 버튼 -->
     <ImageButton
-        android:id="@+id/btn_menu"
+        android:id="@+id/btn_left"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_weight="1"
-        android:src="@drawable/ic_menu"
+        android:src="@drawable/ic_left"
         android:background="@color/messageBackgroundColor"
-        android:contentDescription="@string/menu_button_description" />
+        android:contentDescription="@string/left_button_description" />
 
     <!-- 제목 -->
     <TextView
