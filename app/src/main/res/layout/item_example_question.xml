@@ -1,4 +1,4 @@
-<androidx.cardview.widget.CardView
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cardView"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,25 +8,26 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="4dp"
-    app:cardBackgroundColor="@color/messageBackgroundColor">
+    app:cardBackgroundColor="@color/messageBackgroundColor"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/defaultStrokeColor">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:padding="16dp"
         android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="16dp"
         tools:ignore="UseCompoundDrawables">
 
-<!--        추후 수정하기(하나의 textView안에 표현하기)-->
+        <!--        추후 수정하기(하나의 textView안에 표현하기)-->
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginEnd="12dp"
             android:layout_marginVertical="20dp"
+            android:layout_marginEnd="12dp"
             android:importantForAccessibility="no" />
 
 
@@ -35,12 +36,13 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:textAlignment="viewStart"
             android:textColor="@color/textColor"
             android:textSize="14sp"
-            android:textAlignment="viewStart"
-            android:gravity="center_vertical"
-            android:ellipsize="end"
-            android:maxLines="2"
             tools:ignore="RtlCompat" />
+
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

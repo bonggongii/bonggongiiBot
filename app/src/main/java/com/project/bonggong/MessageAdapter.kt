@@ -5,28 +5,40 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.ImageButton
+//import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+//import com.bumptech.glide.Glide
 import com.project.bonggong.model.Message
 import com.project.bonggong.util.MarkdownProcessor
 
 class MessageAdapter(
     private val messages: List<Message>,
-    private val markdownProcessor: MarkdownProcessor
-    ) :  RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val markdownProcessor: MarkdownProcessor,
+    private val retryClickListener: (() -> Unit)? = null
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     // ViewHolder for chatbot messages
-    class ChatbotMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val profileImageView: ImageView = itemView.findViewById(R.id.profileImageView)
+    class ChatbotMessageViewHolder(itemView: View, retryClickListener: (() -> Unit)?) :
+        RecyclerView.ViewHolder(itemView) {
+//        val profileImageView: ImageView = itemView.findViewById(R.id.profileImageView)
         val messageTextView: TextView = itemView.findViewById(R.id.messageTextView)
         val moreButton: TextView = itemView.findViewById(R.id.moreButton)
+        val retryButton: ImageButton = itemView.findViewById(R.id.btn_retry_textMessage)
+
+        init {
+            retryButton.setOnClickListener {
+                retryClickListener?.invoke() // 리스너 호출
+            }
+        }
+
     }
 
     // ViewHolder for user messages
     class UserMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val messageTextView: TextView = itemView.findViewById(R.id.messageTextView)
+
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -46,7 +58,7 @@ class MessageAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_chatbot_message, parent, false)
-            ChatbotMessageViewHolder(view)
+            ChatbotMessageViewHolder(view, retryClickListener)
         }
     }
 
@@ -57,6 +69,9 @@ class MessageAdapter(
 
         if (holder is ChatbotMessageViewHolder) {
             holder.itemView.tag = message
+            // retryButton
+            holder.retryButton.visibility =
+                if (message.shouldShowRetryButton) View.VISIBLE else View.GONE
 
             // 메시지 확장 여부에 따라 텍스트 설정
             if (message.isExpanded) {
@@ -86,12 +101,14 @@ class MessageAdapter(
                 message.isExpanded = !message.isExpanded
                 notifyItemChanged(position)
             }
+            //이미지파일을 로컬에 다 저장을 하고, xml에서 다 지정해놔서 굳이 쓸 필요 없는 라이브러리 같습니다~@
+//            // Glide로 프로필 이미지 로드
+//            Glide.with(holder.itemView.context)
+//                .load(message.profileImageRes)
+//                .placeholder(R.drawable.bonggong_profile)
+//                .into(holder.profileImageView)
 
-            // Glide로 프로필 이미지 로드
-            Glide.with(holder.itemView.context)
-                .load(message.profileImageRes)
-                .placeholder(R.drawable.bonggong_profile)
-                .into(holder.profileImageView)
+
         } else if (holder is UserMessageViewHolder) {
             holder.messageTextView.text = message.text
         }

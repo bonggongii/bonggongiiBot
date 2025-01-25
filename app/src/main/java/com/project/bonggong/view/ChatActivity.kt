@@ -2,6 +2,8 @@ package com.project.bonggong.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,13 +13,16 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.bonggong.ChatContract
 import com.project.bonggong.ExampleQuestionsAdapter
+import com.project.bonggong.MainActivity
 import com.project.bonggong.MessageAdapter
 import com.project.bonggong.R
 import com.project.bonggong.model.GptApiRequest
@@ -44,15 +49,32 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     private lateinit var presenter: ChatContract.Presenter
     private lateinit var exampleQuestionsAdapter: ExampleQuestionsAdapter
     private lateinit var clearButton: ImageButton
+    private lateinit var leftButton: ImageButton
+    private lateinit var mainBonggong: ImageView
+    private lateinit var mainText: ImageView
+    private lateinit var mainDescription: ImageView
+    private lateinit var backgroundImage: ImageView
+    private lateinit var progressBar: ProgressBar
+    private var isWaitingForResponse = false
+
+
+
+
 
     // 메시지를 저장할 리스트 (Message 객체로)
     private val messages = mutableListOf<Message>()
     private val allExampleQuestions = listOf(
+        "경기도 일자리 재단의 주요 사업과 기능은 무엇인가요?",
         "구직자 지원 서비스는 어떤 것이 있나요?",
+        "경기도 일자리 재단에서 제공하는 구직자 교육 프로그램은 무엇이 있나요?",
         "청년 취업 지원 정책이 궁금해요.",
+        "경기도 청년을 대상으로 하는 일자리 지원 프로그램에는 어떤 것들이 있나요?",
+        "경기도에서 여성을 위한 일자리 지원 프로그램은 어떤 것들이 있나요?",
+        "경기도에서 중장년층을 위해 제공하는 재취업 프로그램은 무엇인가요?",
         "경기도 일자리 재단 위치와 운영 시간을 알려주세요.",
         "진행 중인 채용 공고를 볼 수 있을까요?",
         "재직자 교육 프로그램은 어떻게 신청하나요?",
+        "직업 상담을 받으려면 어떻게 해야 하나요?",
         "온라인 취업 박람회에 대해 알고 싶어요.",
         "인턴십 기회는 어디서 찾을 수 있나요?",
         "자기소개서는 어떻게 작성해야 하나요?"
@@ -87,19 +109,42 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         messageInput = findViewById(R.id.editTextMessage)
         sendButton = findViewById(R.id.buttonSend)
 
+        mainBonggong = findViewById(R.id.main_bonggong)
+        mainText = findViewById(R.id.main_text)
+        mainDescription = findViewById(R.id.main_description)
+        backgroundImage = findViewById(R.id.background_image)
+
+        // 초기화 작업
+        progressBar = findViewById(R.id.progressBar)
+
+        backgroundImage.visibility = View.GONE // 배경이미지 안보이도록 설정
+
         // 초기화 버튼 초기화 및 클릭 이벤트 설정
         clearButton = findViewById(R.id.btn_clear_chat)
         clearButton.setOnClickListener {
             clearChatHistory() // 초기화 함수 호출
         }
 
+        // 이전 메뉴로 이동 버튼 초기화 및 클릭 이벤트 설정
+        leftButton = findViewById(R.id.btn_left)
+        leftButton.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+
         // 랜덤으로 4개의 질문 선택
         val exampleQuestions = allExampleQuestions.shuffled().take(4)
 
         // RecyclerView에 데이터를 표시할 어댑터 설정
-        adapter = MessageAdapter(messages, MarkdownProcessor(this))
+        adapter = MessageAdapter(messages, MarkdownProcessor(this)){
+            //displayRetryButtonWithShowError()
+            // Retry button이 클릭되었을 때 호출될 메서드
+            unDisplayRetryButtonWithShowError()
+        }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+
 
         // 뷰를 touch 했을 때, 키보드 내리기
         recyclerView.setOnTouchListener { _, event ->
@@ -118,8 +163,6 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
             }
         }
 
-        // 초기 전송 버튼 상태 설정
-        updateSendButtonState()
 
         // text-watcher
         messageInput.addTextChangedListener(object: TextWatcher {
@@ -133,6 +176,9 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
                 updateSendButtonState()
             }
         })
+
+
+
         // 예시 질문 어댑터 설정
         exampleQuestionsAdapter = ExampleQuestionsAdapter(exampleQuestions) { selectedQuestion ->
             onExampleQuestionSelected(selectedQuestion)
@@ -140,6 +186,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         // 그리드 레이아웃을 적용하여 2열로 설정
         exampleQuestionsRecyclerView.layoutManager = GridLayoutManager(this, 2)
         exampleQuestionsRecyclerView.adapter = exampleQuestionsAdapter
+
 
         //버튼 클릭 리스너
         sendButton.setOnClickListener {
@@ -151,11 +198,24 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         messageInput.setText(question) // 입력창에 질문 추가
         exampleQuestionsRecyclerView.visibility = View.GONE // 예시 질문 숨김
         recyclerView.visibility = View.VISIBLE // 채팅 창 표시
+        backgroundImage.visibility = View.VISIBLE //배경 나타나기
+
+        // 추가한 이미지뷰 숨김
+        mainBonggong.visibility = View.GONE
+        mainText.visibility = View.GONE
+        mainDescription.visibility = View.GONE
     }
 
     private fun sendMessage() {
         val messageText = messageInput.text.toString()
         exampleQuestionsRecyclerView.visibility = View.GONE // 예시 질문 숨김
+        backgroundImage.visibility = View.VISIBLE //배경 나타나기
+
+        // 추가한 이미지뷰 숨김
+        mainBonggong.visibility = View.GONE
+        mainText.visibility = View.GONE
+        mainDescription.visibility = View.GONE
+
 
         if (messageText.isNotEmpty()) {
             val newMessage = Message(messageText, null, true)
@@ -164,23 +224,92 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
             recyclerView.scrollToPosition(messages.size - 1)
             messageInput.text.clear()
 
-            // presenter에 사용자 입력 전달하기
-            presenter.onUserInput(messageText)
+            // 로딩 상태 표시
+            showLoading()
 
-            // 키보드 내리기
+            presenter.onUserInput(messageText) { success ->
+                // 성공 또는 실패에 따른 로딩 상태 숨김
+                if (!success) showError("메시지 전송 실패")
+            }
             hideKeyboard()
-
         }
     }
 
 
+    // 전송 버튼 상태를 업데이트하는 함수
+    private fun updateSendButtonState() {
+        // 응답 대기 중이면 비활성화된 아이콘을 유지하고 버튼도 비활성화
+        if (isWaitingForResponse) {
+            sendButton.setImageResource(R.drawable.buttonsend_disabled)
+            sendButton.isEnabled = false
+        } else {
+            // 응답 대기 중이 아닐 때는 텍스트에 따라 아이콘과 버튼 상태 변경
+            if (messageInput.text.isNullOrBlank()) {
+                sendButton.setImageResource(R.drawable.buttonsend_disabled)
+                sendButton.isEnabled = false
+            } else {
+                sendButton.setImageResource(R.drawable.buttonsend_abled)
+                sendButton.isEnabled = true
+            }
+        }
+
+        sendButton.visibility = View.VISIBLE // 버튼을 보이도록 설정
+    }
+
+
     override fun showLoading() {
-        TODO("Not yet implemented")
+        runOnUiThread {
+            Log.d("ChatActivity", "showProgressLoading called on thread: ${Thread.currentThread().name}")
+            isWaitingForResponse = true
+            progressBar.visibility = View.VISIBLE
+            updateSendButtonState()  // 상태에 따라 전송 버튼 비활성화 및 아이콘 업데이트
+        }
     }
 
     override fun hideLoading() {
-        TODO("Not yet implemented")
+        runOnUiThread {
+            isWaitingForResponse = false
+            progressBar.visibility = View.GONE
+            updateSendButtonState()  // 상태에 따라 전송 버튼 비활성화 및 아이콘 업데이트
+            // 추가 확인 코드
+            Log.d("ChatActivity", "ProgressBar visibility: ${progressBar.visibility}")
+            Log.d("ChatActivity", "sendButton enabled: ${sendButton.isEnabled}")
+        }
     }
+
+
+
+    override fun displayRetryButtonWithShowError(){
+
+        //error 뜬경우
+        //messages 마지막 제거 (사용자가 입력한 것)
+        messages.removeLast()
+
+        val errorMessage = Message(
+            text = "응답이 정상적으로 처리되지 않았습니다.\n 다시 시도해주세요.",
+            profileImageRes = R.drawable.bonggong_profile,
+            isUser = false,
+            shouldShowRetryButton = true // retryButton을 보이게 설정
+        )
+        messages.add(errorMessage)
+        // 어댑터에 변경사항 알리기
+        adapter.notifyDataSetChanged()
+
+        //사용자가 보낸 메세지 초기화 (입력창, 보낸거)
+        messageInput.text.clear()
+
+    }
+
+    override fun unDisplayRetryButtonWithShowError(){
+
+        //messages 마지막 제거 (에러메세지.. 그럼 버튼도 날라가지 않을까)
+        messages.removeLast()
+        // 어댑터에 변경사항 알리기
+        adapter.notifyDataSetChanged()
+
+    }
+
+
 
     override fun displayGPTResponse(response: String) {
         // GPT 응답 메세지를 리스트에 추가
@@ -246,21 +375,26 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         messageInput.clearFocus()  // 포커스를 제거하여 키보드가 다시 나타나지 않도록 함
     }
 
-    private fun updateSendButtonState() {
-        if (messageInput.text.isNullOrBlank()) {
-            sendButton.setImageResource(R.drawable.buttonsend_disabled) // 비활성화 이미지로 변경
-            sendButton.visibility = View.VISIBLE // 버튼을 보이도록 설정
-        } else {
-            sendButton.setImageResource(R.drawable.buttonsend_abled) // 활성화 이미지로 변경
-            sendButton.visibility = View.VISIBLE // 버튼을 보이도록 설정
-        }
+    private fun clearChatHistory() {
+        finish() // 액티비티 종료
+
+        // 새로운 액티비티가 열리는 것을 알아채지 못하도록, 애니메이션 제거.
+        applyTransition(OVERRIDE_TRANSITION_CLOSE,0,0)
+        startActivity(Intent(this, ChatActivity::class.java))
+        applyTransition(OVERRIDE_TRANSITION_OPEN,0,0)
+
+        Toast.makeText(this, "대화 내용이 초기화되었습니다.", Toast.LENGTH_SHORT).show()
     }
 
-    private fun clearChatHistory() {
-        val itemCount = messages.size
-        messages.clear() // 메시지 리스트 초기화
-        adapter.notifyItemRangeRemoved(0, itemCount) // 0번 인덱스부터 모든 항목 제거
-        Toast.makeText(this, "대화 내용이 초기화되었습니다.", Toast.LENGTH_SHORT).show()
+    // 버전별 activity 애니메이션 적용 (clearChatHistory() - helper)
+    private fun applyTransition(overrideType: Int, enterAnim: Int, exitAnim: Int) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            // API 34 이상
+            overrideActivityTransition(overrideType, enterAnim, exitAnim)
+        } else {
+            // API 34 미만
+            overridePendingTransition(enterAnim, exitAnim)
+        }
     }
     
     // Activity가 파괴될 때, 코루틴 리소스 정리
