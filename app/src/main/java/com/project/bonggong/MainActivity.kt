@@ -34,6 +34,15 @@ class MainActivity : AppCompatActivity() {
             if (index == 0) { // 첫 번째 챗봇 선택 시만 ChatActivity로 이동
                 val intent = Intent(this, ChatActivity::class.java)
                 startActivity(intent)
+            } else if (index == 1) { // 두 번째 챗봇 선택 시 (ChatActivity로 이동되도록 임시로 연결)
+                val intent = Intent(this, ChatActivity::class.java)
+                startActivity(intent)
+            } else if (index == 2) { // 세 번째 챗봇 선택 시 (ChatActivity로 이동되도록 임시로 연결)
+                val intent = Intent(this, ChatActivity::class.java)
+                startActivity(intent)
+            } else { // 네 번째 챗봇 선택 시 (ChatActivity로 이동되도록 임시로 연결)
+                val intent = Intent(this, ChatActivity::class.java)
+                startActivity(intent)
             }
         }
 
