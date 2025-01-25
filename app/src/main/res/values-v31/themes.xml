@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="Theme.Bonggongii.NoSplash" parent="Base.Theme.Bonggongii">
-<!--        스플래시 중복해결 진행중입니다-->
-<!--        <item name="android:windowSplashScreenBackground">@android:color/transparent</item>-->
-<!--        <item name="android:windowSplashScreenAnimatedIcon">@null</item>-->
-    </style>
-</resources>

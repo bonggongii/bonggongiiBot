@@ -1,9 +1,0 @@
-<!-- res/drawable/chat_background.xml -->
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- 배경 색상 레이어 -->
-    <item android:drawable="@color/backgroundColor" />
-
-    <!-- 이미지 레이어 (랜덤 이미지로 설정 예정) -->
-    <item android:drawable="@drawable/ic_background2" />
-
-</layer-list>

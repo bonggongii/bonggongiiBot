@@ -64,7 +64,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -78,17 +77,14 @@ dependencies {
     implementation (libs.navigation.ui.ktx)
 
     // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // OkHttp
-    implementation(libs.okhttp)
-    implementation(libs.logging.interceptor)
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
     // markdown 라이브러리 추가
-    implementation (libs.core)
-    implementation (libs.linkify)
-
-    //Material Components 라이브러리 추가
-    implementation (libs.material)
+    implementation ("io.noties.markwon:core:4.6.2")
+    implementation ("io.noties.markwon:linkify:4.6.2")
 }

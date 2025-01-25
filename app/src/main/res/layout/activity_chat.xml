@@ -1,64 +1,73 @@
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/backgroundColor">
 
-    <!-- 배경 이미지 -->
-    <include
-        layout="@layout/background_image" />
-
-    <!-- 메인 콘텐츠 영역 -->
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:background="@android:color/transparent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
 
-        <!-- 헤더 레이아웃 -->
-        <include
-            layout="@layout/header" />
+        <ImageButton
+            android:id="@+id/btn_clear_chat"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/reset_button"
+            android:background="@color/backgroundColor"
+            android:contentDescription="@string/reset_button_description"
+            />
+    </LinearLayout>
 
-        <!-- RecyclerView와 ProgressBar를 겹치도록 FrameLayout으로 감쌈 -->
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:breakStrategy="simple"
+        android:layout_weight="1"
+       />
 
-            <!-- 메인 컨텐츠 RecyclerView -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/exampleQuestionsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="center"
+        />
 
-            <!-- 로딩 중임을 표시하는 ProgressBar (중앙에 위치) -->
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                style="?android:attr/progressBarStyleLarge"
-                android:indeterminateTint="@android:color/holo_blue_bright" />
-
-        </FrameLayout>
-
-        <!-- Intro 레이아웃 포함 -->
-        <include
-            layout="@layout/intro" />
-
-        <!-- 예시 질문 RecyclerView -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/exampleQuestionsRecyclerView"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp" />
+            >
 
-        <!-- 입력창과 전송 버튼 레이아웃 포함 -->
-        <include
-            layout="@layout/input" />
+            <EditText
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:id="@+id/editTextMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="12dp"
+                android:minHeight="48dp"
+                android:hint="@string/editTextMessageHint"
+                android:textColorHint="@color/textColorHint"
+                android:textColor="@color/textColor"
+                />
 
-    </LinearLayout>
-</FrameLayout>
+            <ImageButton
+                android:id="@+id/buttonSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/buttonsend_abled"
+                android:background="@color/backgroundColor"
+                android:visibility="gone"
+                />
+
+        </LinearLayout>
+</LinearLayout>
