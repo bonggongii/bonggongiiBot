@@ -84,6 +84,14 @@ STOMP 웹소켓
 </tbody>
 </table>
 
+### 🏆수상 | 경기도일자리재단『 커리어 부트캠프 』, **최우수상**
+<div style="display: flex;">
+  <img src="https://github.com/user-attachments/assets/d526d495-c247-4479-9fa0-840adf807f16" width="500" height="300" style="margin-right: 50px;">
+  <img src="https://github.com/user-attachments/assets/e319a9b6-8f4f-42ba-95fd-e28506ddd339" width="500" height="300">
+</div>
+<br><br>
+
+
 ## 프로젝트 소개
 
 ### 🔍 프로젝트 개요
