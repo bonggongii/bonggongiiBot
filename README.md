@@ -1,5 +1,3 @@
-![image](https://github.com/user-attachments/assets/5b22cb74-6f49-4c7a-99b7-f699e55ba9c2)<div align="">
-
 # 직원을 위한 정부기관 방문시민 종합 정보제공 플랫폼 개발
 
 > 개발 기간 : 2023.12.01 ~ 2023.12.28
