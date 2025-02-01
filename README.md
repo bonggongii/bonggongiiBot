@@ -10,19 +10,24 @@
 <tr>
 <th>Pictures</th>
 <td width="100" align="center">
-<img src="https://avatars.githubusercontent.com/u/60257970?v=4" width="60" height="60">
+<img src="https://github.com/user-attachments/assets/f7c90ac4-0e04-48bb-a0d1-0af9b82f8dd6" width="80" height="80">
+
 </td>
 <td width="100" align="center">
-<img src="https://avatars.githubusercontent.com/u/101985441?v=4" width="60" height="60">
+<img src="https://github.com/user-attachments/assets/4c6d35eb-22b9-4aaf-bc72-12688da46720" width="100" height="100">
+
 </td>
 <td width="100" align="center">
-<img src="https://avatars.githubusercontent.com/u/56528404?v=4" width="60" height="60">
+<img src="https://github.com/user-attachments/assets/a3ccc0ce-0dc0-4c52-a969-caeba8e5f47f" width="100" height="100">
+
 </td>
 <td width="100" align="center">
-<img src="https://avatars.githubusercontent.com/u/133394457?v=4" width="60" height="60">
+<img src="https://github.com/user-attachments/assets/9bf139ac-8a74-4fdf-a26c-9f70e60294fe" width="100" height="100">
+
 </td>
 <td width="100" align="center">
-<img src="https://avatars.githubusercontent.com/u/133394457?v=4" width="60" height="60">
+<img src="https://github.com/user-attachments/assets/ee2fa919-dcbf-407c-ac7a-f1c47be4a3c5" width="100" height="100">
+
 </td>
 </tr>
 <tr>
