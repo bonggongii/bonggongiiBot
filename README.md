@@ -1,4 +1,4 @@
-<div align="">
+![image](https://github.com/user-attachments/assets/5b22cb74-6f49-4c7a-99b7-f699e55ba9c2)<div align="">
 
 # 직원을 위한 정부기관 방문시민 종합 정보제공 플랫폼 개발
 
@@ -88,26 +88,27 @@ STOMP 웹소켓
 
 ## 프로젝트 소개
 
-### 🔍 프로젝트 컨셉
-![](https://i.imgur.com/QCd2sfQ.png)
+### 🔍 프로젝트 개요
+#### ▶️ 정부 기관(플랫폼)을 방문한 시민이 정보를 얻는 기존 방법
+![image](https://github.com/user-attachments/assets/6a7009ef-abed-4a0f-a6f0-6268d42d4cf2)
 
-### 🔍 아키텍처
-![](https://i.imgur.com/6LPYDSF.png)
+#### ⏩️ 기대 효과
+![image](https://github.com/user-attachments/assets/15506373-2924-4a89-8832-4580938dbc8a)
+
 
 ### 🔍 기술 스택
-<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white">
 
-<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+<img src="https://img.shields.io/badge/android-34A853?style=for-the-badge&logo=android&logoColor=white">
+<img src="https://img.shields.io/badge/android studio-3DDC84?style=for-the-badge&logo=androidstudio&logoColor=white">
+<img src="https://img.shields.io/badge/retrofit-4EBF7F?style=for-the-badge&logo=android&logoColor=white">
 
-<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
-<img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white">
-<img src="https://img.shields.io/badge/hibernate-59666C?style=for-the-badge&logo=hibernate&logoColor=white">
+<img src="https://img.shields.io/badge/openai-412991?style=for-the-badge&logo=openai&logoColor=white">
 
-<img src="https://img.shields.io/badge/spring security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
-<img src="https://img.shields.io/badge/jwt-000000?style=for-the-badge&logo=JSONWebTokens&logoColor=white">
-<img src="https://img.shields.io/badge/Amazon ECS-FF9900?style=for-the-badge&logo=amazonecs&logoColor=white">
-<img src="https://img.shields.io/badge/Amazon RDS-527FFF?style=for-the-badge&logo=amazonrds&logoColor=white">
-<img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white">
+<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+
+
 
 
 ## 주요 기능
