@@ -115,6 +115,9 @@ STOMP 웹소켓
 소셜 로그인을 통해 사용자는 번거로운 회원가입 / 로그인 과정을 거치지 않고 서비스를 이용할 수 있습니다. Spring Security, JWT, OAuth2를 사용했으며, 통신간 암호화를 위해 HTTPS를 적용했으며 리프레시 토큰을 1회성으로 사용하게 만드는 Rotation 기술을 도입했습니다.
 
 ## 데모 영상 
+https://github.com/user-attachments/assets/d3c3faca-ae19-41b8-a4b3-d6dba97a97a1
+
+
 
 ### ✨ 프로젝트 생성
 ![](https://i.imgur.com/PiEwntJ.gif)
