@@ -1,6 +1,7 @@
 # 직원을 위한 정부기관 방문시민 종합 정보제공 플랫폼 개발
 
-> 개발 기간 : 2023.12.01 ~ 2023.12.28
+> 개발 기간 : 2024.09.29 ~ 2024.12.01
+<br>
 
 ## 팀 소개
 
@@ -9,24 +10,19 @@
 <tr>
 <th>Pictures</th>
 <td width="100" align="center">
-<a href="https://github.com/sbslc2000">
 <img src="https://avatars.githubusercontent.com/u/60257970?v=4" width="60" height="60">
-</a>
 </td>
 <td width="100" align="center">
-<a href="https://github.com/leebongseung">
 <img src="https://avatars.githubusercontent.com/u/101985441?v=4" width="60" height="60">
-</a>
 </td>
 <td width="100" align="center">
-<a href="https://github.com/HJunng">
 <img src="https://avatars.githubusercontent.com/u/56528404?v=4" width="60" height="60">
-</a>
 </td>
 <td width="100" align="center">
-<a href="https://github.com/charmingGyu">
 <img src="https://avatars.githubusercontent.com/u/133394457?v=4" width="60" height="60">
-</a>
+</td>
+<td width="100" align="center">
+<img src="https://avatars.githubusercontent.com/u/133394457?v=4" width="60" height="60">
 </td>
 </tr>
 <tr>
@@ -41,32 +37,48 @@
 <tr>
 <th>Role</th>
 <td width="150" align="center">
-컨테이너 관리 및 오케스트레이션 지원<br>
+- 앱 기획<br>
+- UI 디자인<br>
+- 화면 구현<br>
 </td>
 <td width="150" align="center">
-STOMP 웹소켓 
-모듈 개발, 
-채팅 서비스 제공<br>
+- API 에러 처리 로직 구현<br>
+- Git 관리<br>
 </td>
 <td width="150" align="center">
-소셜 로그인 및 인증 인가, HTTPS 적용 및 서버 환경 설정
-<br>
+- 프로젝트 Gradle 설정 관리<br>
+- OpenAI API 연동<br>
 </td>
 <td width="150" align="center">
-프로젝트 파일 및 디렉터리 관리 API 개발, ChatGPT API 개발
+- OpenAI 챗봇 모델 구축<br>
+- 초기화, 로딩 기능 구현<br>
+</td>
+<td width="150" align="center">
+- MVP 아키텍처 패턴 적용<br>
+- streaming 응답 처리 로직 구현<br>
 <br>
 </td>
 </tr>
 <tr>
 <th>GitHub</th>
 <td width="100" align="center">
-<a href="https://github.com/sbslc2000">
-<img src="http://img.shields.io/badge/sbslc2000-green?style=social&logo=github"/>
+<a href="https://github.com/Dhani5703">
+<img src="http://img.shields.io/badge/Dhani5703-green?style=social&logo=github"/>
 </a>
 </td>
 <td width="100" align="center">
-<a href="https://github.com/leebongseung">
-<img src="http://img.shields.io/badge/leebongseung-green?style=social&logo=github"/>
+<a href="https://github.com/Soobin-Park">
+<img src="http://img.shields.io/badge/SoobinPark-green?style=social&logo=github"/>
+</a>
+</td>
+<td width="100" align="center">
+<a href="https://github.com/eejj357">
+<img src="http://img.shields.io/badge/eejj357-green?style=social&logo=github"/>
+</a>
+</td>
+<td width="100" align="center">
+<a href="https://github.com/Chae-eun-Lee">
+<img src="http://img.shields.io/badge/ChaeeunLee-green?style=social&logo=github"/>
 </a>
 </td>
 <td width="100" align="center">
@@ -74,15 +86,10 @@ STOMP 웹소켓
 <img src="http://img.shields.io/badge/HJunng-green?style=social&logo=github"/>
 </a>
 </td>
-<td width="100" align="center">
-<a href="https://github.com/charmingGyu">
-<img src="http://img.shields.io/badge/charmingGyu-green?style=social&logo=github"/>
-</a>
-</td>
-
 </tr>
 </tbody>
 </table>
+<br>
 
 ### 🏆수상 | 경기도일자리재단『 커리어 부트캠프 』, **최우수상**
 <div style="display: flex;">
