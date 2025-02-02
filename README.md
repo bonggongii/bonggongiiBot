@@ -133,7 +133,26 @@
 ### ✨ 챗봇 UI 화면 구성
 - 사용자가 직관적으로 챗봇에게 질문을 입력하고 선택할 수 있는 인터페이스를 제공합니다.
 - **질문 입력 창과 버튼**을 통해 사용자는 텍스트 입력 또는 **예시 질문 카드 선택**을 통해 질문을 제출할 수 있습니다.
-- **RecyclerView**를 활용하여 채팅 화면을 구성하였으며, ****사용자 질문과 챗봇 응답이 시간순으로 정렬됩니다. **메시지 전송 후 자동 스크롤, 긴 답변 토글**(더보기, 접기)**, Streaming** 방식 적용 등을 통해 원활한 사용자 경험을 제공합니다.
+
+![image](https://github.com/user-attachments/assets/ba3c0381-360f-4ddf-9248-1123e2e4ff97)
+
+![image](https://github.com/user-attachments/assets/fbf0738d-8f82-4471-ae32-4d3d46552122)
+
+- **RecyclerView**를 활용하여 채팅 화면을 구성하였으며, **사용자 질문과 챗봇 응답이 시간순으로 정렬**됩니다. **메시지 전송 후 자동 스크롤, 긴 답변 토글**(더보기, 접기)**, Streaming** 방식 적용 등을 통해 원활한 사용자 경험을 제공합니다.
+
+<div align="center">
+<table>
+  <tr>
+    <td>
+      <video src="https://github.com/user-attachments/assets/01a2c310-20c5-457e-b277-687814f2ef7d" controls width="300"></video>
+    </td>
+    <td>
+      <video src="https://github.com/user-attachments/assets/da0b544b-a509-4f53-b80a-dd1f41f7b5e7" controls width="300"></video>
+    </td>
+  </tr>
+</table>
+</div>
+- 좌 : 스트리밍 방식 적용 전, 후 : 스트리밍 방식 적용 후
 
 ###  💬 GPT API 연동 - Assistant API 활용
 - OpenAI의 **Assistant API**를 활용하여 GPT 모델과 연결됩니다.
