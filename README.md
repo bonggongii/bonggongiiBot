@@ -147,26 +147,16 @@
 </div>
 
 
-### ✨ 프로젝트 생성
-![](https://i.imgur.com/PiEwntJ.gif)
+## 세부 기획
+### 🎨 피그마
+#### [🔗피그마 전체보기](https://www.figma.com/design/YuPBHBUsw1PCUCfnvkABDC/경기도-커리어부트-봉공이-AI챗봇?node-id=1-2244&node-type=frame&t=HZ6zAVXRci6p2C2U-0)
+![image](https://github.com/user-attachments/assets/aef033f6-3acb-4c2b-821a-69573ea71484)
 
-### ✨ 프로젝트 입장
-![](https://i.imgur.com/u8PjkEN.gif)
+### 📖 요구사항 명세서
+#### [🔗요구사항 명세서 및 피처리스트 전체보기](https://docs.google.com/spreadsheets/d/1vbSj1u1r4l2oXHQtlO7By4mJc5tXbMCyDQG7Z2i1p1I/edit?gid=818272064#gid=818272064)
+![image](https://github.com/user-attachments/assets/e0783ea3-1900-4729-b785-74f2cc8a994d)
 
-### ✨동시 편집
-![](https://i.imgur.com/4VSu0vS.gif)
-
-### ✨ 파일트리
-![](https://i.imgur.com/ZvOswWB.gif)
-
-### ✨ 채팅
-![](https://i.imgur.com/Hu4KZQv.gif)
-
-### ✨ 터미널
-![](https://i.imgur.com/jeUx55A.gif)
-
-### 챗지피티
-![](https://i.imgur.com/6D1kcfn.gif)
-
+### ⚙️ 피처리스트
+![image](https://github.com/user-attachments/assets/b787e155-71de-4a00-92c8-1eedd87377b6)
 
 </div>
